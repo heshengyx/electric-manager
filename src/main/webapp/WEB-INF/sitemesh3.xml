@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sitemesh>
+	<!-- 对不同的路径，启用不同的装饰器 -->
+	<mapping path="/manager" decorator="/WEB-INF/layout/managerLayout.jsp"/>
+	<mapping path="/manager/organization" decorator="/WEB-INF/layout/managerLayout.jsp"/>
+	<mapping path="/manager/organization/query" decorator="/WEB-INF/layout/managerLayout.jsp"/>
+	
+	<!-- 排除，不进行装饰的路径 -->
+	<mapping path="/css/*" exclude="true"/>
+	<mapping path="/images/*" exclude="true"/>
+	<mapping path="/js/*" exclude="true"/>
+	<mapping path="/locale/*" exclude="true"/>
+	<mapping path="/plugins/*" exclude="true"/>
+	<mapping path="/themes/*" exclude="true"/>
+	
+	<!-- 自定义 tag 规则 -->
+	<content-processor>
+		<tag-rule-bundle class="com.grgbanking.electric.bundle.JscriptTagRuleBundle" />
+	</content-processor>
+</sitemesh>
