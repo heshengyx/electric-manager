@@ -175,7 +175,6 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
-
 	<build>
 		<finalName>electric-manager</finalName>
 		<plugins>
