@@ -8,6 +8,10 @@ import com.grgbanking.electric.entity.User;
 
 public class BaseController {
 
+	/**
+	 * 取得当前登录用户
+	 * @return
+	 */
 	protected User getCurrentUser() {
 		Subject currentUser = SecurityUtils.getSubject();
 		Session session = currentUser.getSession();

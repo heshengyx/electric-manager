@@ -3,7 +3,7 @@
 	<!-- 对不同的路径，启用不同的装饰器 -->
 	<mapping path="/manager" decorator="/WEB-INF/layout/managerLayout.jsp"/>
 	<mapping path="/manager/organization" decorator="/WEB-INF/layout/managerLayout.jsp"/>
-	<mapping path="/manager/organization/query" decorator="/WEB-INF/layout/managerLayout.jsp"/>
+	<mapping path="/manager/organization/list" decorator="/WEB-INF/layout/tabLayout.jsp"/>
 	
 	<!-- 排除，不进行装饰的路径 -->
 	<mapping path="/css/*" exclude="true"/>

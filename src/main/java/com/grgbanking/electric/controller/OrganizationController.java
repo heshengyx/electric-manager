@@ -12,6 +12,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.grgbanking.electric.data.OrganizationData;
 import com.grgbanking.electric.entity.Organization;
 import com.grgbanking.electric.entity.User;
 import com.grgbanking.electric.json.JSONMessage;
@@ -34,14 +35,14 @@ public class OrganizationController extends BaseController {
 		return "organization";
 	}
 	
-	@RequestMapping("/query")
-	public String query() {
+	@RequestMapping("/list")
+	public String list() {
 		return "organizationList";
 	}
 	
-	@RequestMapping("/queryData")
+	@RequestMapping("/query")
 	@ResponseBody
-	public Object queryData(OrganizationQueryParam param) {
+	public Object query(OrganizationQueryParam param) {
 		return organizationService.query(param);
 	}
 	
@@ -54,6 +55,27 @@ public class OrganizationController extends BaseController {
 			organization.setCreateBy(user.getAccount());
 			organization.setUpdateBy(user.getAccount());
 			organizationService.saveOrUpdate(organization);
+			jMessage.setStatus(Boolean.TRUE);
+		} catch (Exception e) {
+			LOGGER.error("保存数据失败", e);
+			jMessage.setStatus(Boolean.FALSE);
+			if (e instanceof DataAccessResourceFailureException) {
+				jMessage.setMessage(e.getMessage());
+			} else {
+				jMessage.setMessage("系统异常");
+			}
+		}
+		return jMessage;
+	}
+	
+	@RequestMapping("/saveBatch")
+	@ResponseBody
+	public Object saveBatch(OrganizationData data) {
+		User user = getCurrentUser();
+		JSONMessage jMessage = new JSONMessage();
+		try {
+			data.setCreateBy(user.getAccount());
+			organizationService.saveBatchData(data);
 			jMessage.setStatus(Boolean.TRUE);
 		} catch (Exception e) {
 			LOGGER.error("保存数据失败", e);

@@ -12,19 +12,29 @@
 		</div>
 		<div data-options="region:'center'">
 			<div id="tab" class="easyui-tabs" data-options="fit:true,border:false,plain:true">
-				<div title="集团列表" href="hello.php" class="content-doc"></div>
+				<!-- <div title="集团列表" href="hello.php" class="content-doc"></div> -->
 			</div>
 		</div>
 		<jscript>
 		<script type="text/javascript">
 		$(function() {
-			$('#trees').tree({
-		   		url: "${ctx}/manager/organization/tree",
-		   		onClick: function(node) {
-		   			openTab(node.text, '${ctx}/manager/organization/query');
-		   	    }
-		   	});
+		    openTab('集团列表', '${ctx}/manager/organization/list', false);
+		    trees();
+			/* var url = "${ctx}/manager/organization/tree"
+	        var params = {
+	        };
+	        $.post(url, params, function(result) {
+	            console.log(result);
+	        }, 'json'); */
 		});
+		function trees() {
+			$('#trees').tree({
+                url: "${ctx}/manager/organization/tree",
+                onClick: function(node) {
+                    openTab(node.text, '${ctx}/manager/organization/list?parentId=' + node.id, true);
+                }
+            });
+		}
 		</script>
 		</jscript>
 	</body>
