@@ -241,10 +241,3 @@ var checkIdCard = function(idcard){
 		    break;  
 		}  
 };
-var getRowIds = function(rows) {
-	var ids = new Array();
-	for(var i = 0; i < rows.length; i++){
-		ids.push(rows[i].id);
-	}
-	return ids.join(",");
-}
