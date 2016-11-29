@@ -24,7 +24,6 @@
 		<script type="text/javascript" src="${ctx}/js/jquery.easyui.min.js"></script>
 		<script type="text/javascript" src="${ctx}/js/prettify.js"></script>
 		<script type="text/javascript" src="${ctx}/locale/easyui-lang-zh_CN.js"></script>
-		<script type="text/javascript" src="${ctx}/js/format.js"></script>
 		<sitemesh:write property="jscript" />
 		<!-- js -->
 	</body>

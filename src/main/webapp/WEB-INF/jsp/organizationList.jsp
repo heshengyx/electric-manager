@@ -4,20 +4,6 @@
 <html>
     <head>
         <title>组织机构-数据收集平台</title>
-        <style type="text/css">
-        .tag-content {
-            font-size: 12px;
-            padding: 15px;
-        }
-        .td-right {
-            width: 80px;
-            text-align: right;
-        }
-        .td-center {
-            width: 80px;
-            text-align: center;
-        }
-        </style>
     </head>
     
     <c:set var="title" value="公司"/>
@@ -112,6 +98,7 @@
 	<!-- content -->
 	<jscript>
 	<!-- js -->
+	<script type="text/javascript" src="${ctx}/js/format.js"></script>
 	<script type="text/javascript">
 	$(function() {
 	    $('#datagrid').datagrid({

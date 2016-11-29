@@ -66,8 +66,8 @@
                     <table class="navbar-table">
                     <tr>
                         <td><a href="/index.php">首页</a></td>
-                        <td><a href="/index.php">组织机构</a></td>
-                        <td><a href="/index.php">终端管理</a></td>
+                        <td><a href="${ctx}/manager/organization">组织机构</a></td>
+                        <td><a href="${ctx}/manager/terminal">终端管理</a></td>
                         <td><a href="/index.php">用户管理</a></td>
                         <td><a href="/index.php">报表管理</a></td>
                         <td><a href="/index.php">系统管理</a></td>

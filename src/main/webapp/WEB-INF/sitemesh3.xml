@@ -4,6 +4,11 @@
 	<mapping path="/manager" decorator="/WEB-INF/layout/managerLayout.jsp"/>
 	<mapping path="/manager/organization" decorator="/WEB-INF/layout/managerLayout.jsp"/>
 	<mapping path="/manager/organization/list" decorator="/WEB-INF/layout/tabLayout.jsp"/>
+    <mapping path="/manager/terminal" decorator="/WEB-INF/layout/managerLayout.jsp"/>
+    <mapping path="/manager/terminal/list" decorator="/WEB-INF/layout/tabLayout.jsp"/>
+    <mapping path="/manager/style" decorator="/WEB-INF/layout/managerLayout.jsp"/>
+    <mapping path="/manager/style/list" decorator="/WEB-INF/layout/tabLayout.jsp"/>
+    <!-- sitemesh-conf -->
 	
 	<!-- 排除，不进行装饰的路径 -->
 	<mapping path="/css/*" exclude="true"/>
