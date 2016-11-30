@@ -9,6 +9,7 @@
 		<title><sitemesh:write property="title" /></title>
 		<link rel="stylesheet" type="text/css" href="${ctx}/themes/default/easyui.css" />
 		<link rel="stylesheet" type="text/css" href="${ctx}/themes/icon.css" />
+		<link rel="stylesheet" type="text/css" href="${ctx}/themes/extension.css" />
 		<link rel="stylesheet" type="text/css" href="${ctx}/css/common.css" />
 		<link rel="stylesheet" type="text/css" href="${ctx}/css/style.css" />
 		<link rel="shortcut icon" type="image/x-icon" href="${ctx}/favicon.ico" />
@@ -31,6 +32,9 @@
             font-size: 14px;
             padding-left: 20px;
         }
+        .menu-accordion {
+        	padding: 10px 10px 10px 5px;
+        }
 		</style>
 		<sitemesh:write property="head" />
 	</head>
@@ -42,21 +46,27 @@
         <div data-options="region:'south',split:true,border:false" style="height: 30px; background: #D2E0F2; ">
             <div class="footer">Copyright @ 2016 广电运通 www.grgbanking.com</div>
         </div>
-        <div data-options="region:'west',split:true" title="导航菜单" style="width:20%;min-width:180px;">
-            <div id="aa" class="easyui-accordion" style="border:0;height:100%;">
-			    <div title="组织机构" data-options="iconCls:'icon-save',selected:true" style="padding:10px;">
-			        <ul class="easyui-tree" id="trees"></ul>
+        <div data-options="region:'west',split:true,iconCls:'icon-application_side_tree'" title="导航菜单" style="width:20%;min-width:180px;">
+            <div class="easyui-accordion" style="border:0;height:100%;" id="menuTree">
+			    <div class="menu-accordion" title="组织机构" data-options="iconCls:'icon-chart_organisation',selected:true">
+			        <ul class="easyui-tree">
+			        	<li><a href="javascript:void(0);" onclick="openTab('机构管理', '${ctx}/manager/organization/list', true)">机构管理</a></li>
+			        </ul>
+			        <!-- <ul class="easyui-tree" id="trees"></ul> -->
 			    </div>
-			    <div title="终端管理" data-options="iconCls:'icon-save'" style="padding:10px;">
-			        content2
+			    <div class="menu-accordion" title="终端管理" data-options="iconCls:'icon-computer'">
+			        <ul class="easyui-tree">
+						<li><a href="javascript:void(0);" onclick="openTab('终端列表', '${ctx}/manager/terminal/list', true)">终端列表</a></li>
+						<li><a href="javascript:void(0);" onclick="openTab('终端类别', '${ctx}/manager/style/list', true)">终端类别</a></li>
+					</ul>
 			    </div>
-			    <div title="报表管理" data-options="iconCls:'icon-save'" style="padding:10px;">
-			        content3
+			    <div class="menu-accordion" title="实时数据" data-options="iconCls:'icon-report'">
+			        <ul class="easyui-tree trees"></ul>
 			    </div>
-			    <div title="用户管理" data-options="iconCls:'icon-save'" style="padding:10px;">
+			    <div class="menu-accordion" title="用户管理" data-options="iconCls:'icon-user'">
                     content3
                 </div>
-                <div title="系统管理" data-options="iconCls:'icon-save'" style="padding:10px;">
+                <div class="menu-accordion" title="系统管理" data-options="iconCls:'icon-wrench'">
                     content3
                 </div>
 			</div>
@@ -82,8 +92,20 @@
 					}
 				});
 			});
-			trees();
-			openTab('集团列表', '${ctx}/manager/organization/list', false);
+			//trees();
+			//openTab('集团列表', '${ctx}/manager/organization/list', false);
+			$('.trees').tree({
+                url: "${ctx}/manager/tree?terminalFlag=1",
+                lines: true,
+                onClick: function(node) {
+                	console.log(node);
+                    /* if (node.children) {
+                    	openTab(node.text, '${ctx}/manager/organization/list?parentId=' + node.id, true);
+                    } else {
+                    	openTab(node.text, '${ctx}/manager/terminal/list?orgId=' + node.id, true);
+                    } */
+                }
+            });
 		});
 		function openTab(name, url, flag){
 			if ($('#tab').tabs('exists', name)){
@@ -103,9 +125,14 @@
 		}
 		function trees() {
             $('#trees').tree({
-                url: "${ctx}/manager/organization/tree",
+                url: "${ctx}/manager/tree",
+                lines: true,
                 onClick: function(node) {
-                    openTab(node.text, '${ctx}/manager/organization/list?parentId=' + node.id, true);
+                    if (node.children) {
+                    	openTab(node.text, '${ctx}/manager/organization/list?parentId=' + node.id, true);
+                    } else {
+                    	openTab(node.text, '${ctx}/manager/terminal/list?orgId=' + node.id, true);
+                    }
                 }
             });
         }

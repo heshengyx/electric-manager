@@ -2,8 +2,15 @@
 <%@ include file="/common/include.jsp"%>
 <!DOCTYPE html>
 <html>
-	<head><title>首页-爱房网</title></head>
+	<head>
+		<title>首页-数据采集平台</title>
+	</head>
 	
 	<body>
+		<div data-options="region:'center'">
+			<div id="tab" class="easyui-tabs" data-options="fit:true,border:false,plain:true">
+				<div title="首页" href="welcome.jsp" class="content-doc"></div>
+			</div>
+		</div>
 	</body>
 </html>

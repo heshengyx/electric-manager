@@ -8,6 +8,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title><sitemesh:write property="title" /></title>
 		<link rel="stylesheet" type="text/css" href="${ctx}/themes/default/easyui.css" />
+		<link rel="stylesheet" type="text/css" href="${ctx}/themes/extension.css" />
 		<link rel="stylesheet" type="text/css" href="${ctx}/themes/icon.css" />
 		<link rel="stylesheet" type="text/css" href="${ctx}/css/common.css" />
 		<link rel="stylesheet" type="text/css" href="${ctx}/css/style.css" />
@@ -15,7 +16,8 @@
 		<link rel="shortcut icon" type="image/x-icon" href="${ctx}/favicon.ico" />
 		<sitemesh:write property="head" />
 	</head>
-	<body>
+	
+	<body class="easyui-layout">
 		<!-- content -->
 		<sitemesh:write property="body" />
 		<!-- content -->

@@ -1,7 +1,6 @@
 package com.grgbanking.electric.controller;
 
 import java.util.Arrays;
-import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,7 +17,6 @@ import com.grgbanking.electric.entity.User;
 import com.grgbanking.electric.json.JSONMessage;
 import com.grgbanking.electric.param.OrganizationQueryParam;
 import com.grgbanking.electric.service.IOrganizationService;
-import com.grgbanking.electric.tree.Tree;
 
 @Controller
 @RequestMapping("/manager/organization")
@@ -127,17 +125,5 @@ public class OrganizationController extends BaseController {
 			}
 		}
 		return jMessage;
-	}
-	
-	@RequestMapping("/tree")
-	@ResponseBody
-	public Object tree(OrganizationQueryParam param) {
-		List<Tree> data = null;
-		try {
-			data = organizationService.tree(param);
-		} catch (Exception e) {
-			LOGGER.error("获取数据失败", e);
-		}
-		return data;
 	}
 }

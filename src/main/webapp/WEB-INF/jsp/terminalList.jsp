@@ -9,19 +9,18 @@
     <body>
     <!-- content -->
     <div class="tag-content">
-        <!-- search -->
-    <form id="searchForm" method="post">
+    <!-- search -->
+    <form class="data-form" id="searchForm" method="post">
     <table>
         <tr>
-        	<td class="td-right">终端名称：</td>
-<td><input type="text" id="nameSearch" style="width:150px;"></td>
-<td class="td-right">终端编码：</td>
-<td><input type="text" id="codeSearch" style="width:150px;"></td>
-
+        	<td>终端名称：</td>
+			<td><input type="text" id="nameQuery" style="width:150px;"></td>
+			<td class="td-right">终端编码：</td>
+			<td><input type="text" id="codeQuery" style="width:100px;"></td>
             <td class="td-right">创建时间：</td>
             <td>
-            <input class="easyui-datebox" type="text" id="createDateBegin" style="width:100px;">~
-            <input class="easyui-datebox" type="text" id="createDateEnd" style="width:100px;"></td>
+            <input class="easyui-datebox" type="text" id="createDateBeginQuery" style="width:100px;">~
+            <input class="easyui-datebox" type="text" id="createDateEndQuery" style="width:100px;"></td>
         </tr>
         <tr>
             <td></td>
@@ -33,11 +32,14 @@
     </table>
     </form>
     <!-- search -->
-        <!-- datagrid -->
+    <!-- datagrid -->
     <div id="tools">
-        <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" id="addBtn">新增</a>
-        <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" id="addBatchBtn">批量</a>
-        <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true" id="deleteBtn">删除</a>
+        <a class="easyui-linkbutton" href="javascript:void(0);" data-options="iconCls:'icon-add',plain:true" id="addBtn">新增</a>
+        <a class="easyui-linkbutton" href="javascript:void(0);" data-options="iconCls:'icon-remove',plain:true" id="deleteBtn">删除</a>
+        <a class="easyui-linkbutton" href="javascript:void(0);" data-options="iconCls:'icon-control_add_blue',plain:true" id="addBatchBtn">批量</a>
+        <c:if test="${!empty param.orgId}">
+        <a class="easyui-linkbutton" href="javascript:void(0);" data-options="iconCls:'icon-computer_add',plain:true" id="appendBatchBtn">添加</a>
+        </c:if>
     </div>
     <table id="datagrid" style="width:100%;"></table>
     <!-- datagrid -->
@@ -50,6 +52,7 @@
                 style="width:330px;height:200px;padding:10px;">
         <form id="editForm" method="post">
         <input type="hidden" name="id" id="dataId">
+        <input type="hidden" name="orgId" id="orgId" value="${param.orgId}">
         <table class="table">
             <tr>
 				<td align="right">终端名称：</td>
@@ -77,29 +80,65 @@
     </div>
     <!-- 新增 -->
     <!-- 批量 -->
-    <div class="easyui-window" id="editBatchWin" data-options="modal:true,closed:true,resizable:false,
+    <div class="easyui-window" id="addBatchWin" data-options="modal:true,closed:true,resizable:false,
                 minimizable:false,
                 maximizable:false,
                 draggable:true,
                 collapsible:false"
                 style="width:350px;height:400px;">
-        <div id="tb" style="height:auto">
+        <div id="addTools" style="height:auto">
             <a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="append()">添加行</a>
             <a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true" onclick="removeit()">删除行</a>
             <a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-save',plain:true" onclick="saveBatch()">保存</a>
         </div>
-        <table id="dgBatch" style="width:100%;">
+        <table id="addBatchDatagrid" style="width:100%;">
             <thead>
                 <tr>
                     <th data-options="field:'name',editor:{type:'text'}">终端名称</th>
 					<th data-options="field:'code',editor:{type:'text'}">终端编码</th>
-
                 </tr>
             </thead>
         </table>
-        <form id="editBatchForm" method="post"></form>
+        <form id="addBatchForm" method="post"></form>
     </div>
     <!-- 批量 -->
+    <!-- 添加 -->
+    <div class="easyui-window" id="appendBatchWin" data-options="modal:true,closed:true,resizable:false,
+                minimizable:false,
+                maximizable:false,
+                draggable:true,
+                collapsible:false"
+                style="width:500px;height:350px;">
+        <div id="appendTools">
+            <a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-save',plain:true" id="saveAppendBtn">保存</a>
+        </div>
+        <div class="tag-content">
+        <!-- search -->
+        <form class="data-form" id="appendSearchForm" method="post">
+	    <table>
+	        <tr>
+	        	<td>终端名称：</td>
+				<td><input type="text" id="nameAppendQuery" style="width:150px;"></td>
+				<td class="td-right">终端编码：</td>
+				<td><input type="text" id="codeAppendQuery" style="width:100px;"></td>
+	        </tr>
+	        <tr>
+	            <td></td>
+	            <td colspan="5">
+	            <a class="easyui-linkbutton" id="searchAppendBtn" href="javascript:void(0);" data-options="iconCls:'icon-search'">查询</a>&nbsp;
+	            <a class="easyui-linkbutton" id="resetAppendBtn" href="javascript:void(0);" data-options="iconCls:'icon-back'">重置</a>
+	            </td>
+	        </tr>
+	    </table>
+	    </form>
+	    <!-- search -->
+	    <form id="saveAppendForm" method="post">
+	    <input type="hidden" name="orgId" value="${param.orgId}">
+        <table id="appendBatchDatagrid" style="width:100%;"></table>
+        </form>
+        </div>
+    </div>
+    <!-- 添加 -->
     </div>
     <!-- content -->
     <jscript>
@@ -112,6 +151,7 @@
             url: '${ctx}/manager/terminal/query',
             toolbar: '#tools',
             idField: "id",
+            queryParams: {orgId: $('#orgId').val()},
             autoRowHeight: true,
             fitColumns: true,
             showFooter: true,
@@ -125,8 +165,9 @@
             columns: [[
                 {field: 'id', title: '选择', width: 30, checkbox: true},
                 {field: 'name', title: '终端名称'},
-				{field: 'code', title: '终端编号'},
+				{field: 'code', title: '终端编号', width: 300},
 				{field: 'styleName', title: '终端类别'},
+				{field: 'orgName', title: '所属公司'},
                 {field: 'createTime', title: '创建时间', formatter:function(val, row, idx) {
                     return to_date_hms(val);
                 }},
@@ -138,17 +179,65 @@
         
         $('#searchBtn').click(function() {
             $('#datagrid').datagrid('load', {
-                name: $('#nameSearch').val(),
-				code: $('#codeSearch').val(),
-
-                createDateBegin: $('#createDateBegin').datebox('getValue'),
-                createDateEnd: $('#createDateEnd').datebox('getValue')
+                name: $('#nameQuery').val(),
+				code: $('#codeQuery').val(),
+                createDateBegin: $('#createDateBeginQuery').datebox('getValue'),
+                createDateEnd: $('#createDateEndQuery').datebox('getValue')
             });
         });
         
         submitForm('${ctx}/manager/terminal/saveOrUpdate');
-        deleteRow('${ctx}/manager/terminal/deleteBatch');
+        deleteRow('${ctx}/manager/terminal/deleteByIds');
         styles('styleEdit');
+        
+        //添加datagrid
+    	/* $('#appendBatchDatagrid').datagrid({
+            toolbar: '#appendTools'
+        }); */
+      
+      	//打开添加界面
+        $('#appendBatchBtn').click(function() {
+        	$('#appendBatchDatagrid').datagrid({
+                url: '${ctx}/manager/terminal/queryData',
+                toolbar: '#appendTools',
+                idField: "id",
+                autoRowHeight: true,
+                fitColumns: true,
+                showFooter: true,
+                pagination: true,
+                pageNumber: 1,
+                pageSize: 20,
+                singleSelect: false,
+                rownumbers: true,
+                selectOnCheck: true,
+                checkOnSelect: true,
+                columns: [[
+                    {field: 'id', title: '选择', width: 30, checkbox: true},
+                    {field: 'name', title: '终端名称'},
+    				{field: 'code', title: '终端编号'},
+    				{field: 'styleName', title: '终端类别'}
+                ]]
+            });
+        	$("#appendBatchWin").window({title:"批量添加"}).window("open").window("center");
+        });
+        
+        $('#saveAppendBtn').click(function() {
+        	$.messager.progress();
+        	var url = "${ctx}/manager/terminal/updateByIds"
+			$.post(url, $('#saveAppendForm').serialize(), function(result) {
+				$.messager.progress('close');
+                if (result.status) {
+                	$('#appendBatchWin').window('close');
+                    $('#datagrid').datagrid('reload');
+                } else {
+                    $.messager.alert({
+                        title: '消息',
+                        ok: '确定',
+                        msg: result.message
+                    });
+                }
+            }, 'json');
+        });
     });
     function styles(fieldId) {
     	/* $('#' + fieldId).combobox({
@@ -176,7 +265,6 @@
                                 $(this).combobox('select', val[0][item]);  
                             }  
                         }
-            	    	//$(this).combobox('select', val[0][item]);
                     } 
             	});
         	} catch(e){}
@@ -192,7 +280,7 @@
                 $('#dataId').val(result.data.id);
                 $('#nameEdit').val(result.data.name);
 				$('#codeEdit').val(result.data.code);
-
+				$('#styleEdit').combobox('setValue', result.data.styleId);
                 $("#editWin").window({title:"修改"}).window("open").window("center");
             } else {
                 $.messager.alert('消息', result.message, 'error');
@@ -201,21 +289,20 @@
     }
     function saveBatch() {
         if (endEditing()){
-            var rows = $('#dgBatch').datagrid('getChanges');
+            var rows = $('#addBatchDatagrid').datagrid('getChanges');
             if (rows.length) {
-                var inserted = $('#dgBatch').datagrid('getChanges', "inserted");
+                var inserted = $('#addBatchDatagrid').datagrid('getChanges', "inserted");
                 if (inserted.length) {
-                    var form = $('#editBatchForm');
+                    var form = $('#addBatchForm');
                     form.children().remove();
                     for (var i=0; i<inserted.length; i++) {
                         form.append('<input type="hidden" name="name" value="' + inserted[i].name + '">');
-form.append('<input type="hidden" name="code" value="' + inserted[i].code + '">');
-
+						form.append('<input type="hidden" name="code" value="' + inserted[i].code + '">');
                     }
                     var url = "${ctx}/manager/terminal/saveBatch"
                     $.post(url, form.serialize(), function(result) {
                         if (result.status) {
-                            $('#editBatchWin').window('close');
+                            $('#addBatchWin').window('close');
                             $('#datagrid').datagrid('reload');
                         } else {
                             $.messager.alert({

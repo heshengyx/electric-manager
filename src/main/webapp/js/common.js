@@ -1,9 +1,9 @@
 $(function() {
 	
 	//批量datagrid
-	$('#dgBatch').datagrid({
-        toolbar: '#tb',
-        onClickRow: onClickBatchRow
+	$('#addBatchDatagrid').datagrid({
+        toolbar: '#addTools',
+        onClickRow: onClickRow
     });
 	
 	//打开新增界面
@@ -14,7 +14,7 @@ $(function() {
 	//打开批量新增界面
     $('#addBatchBtn').click(function() {
         append();
-        $("#editBatchWin").window({title:"批量新增"}).window("open").window("center");
+        $("#addBatchWin").window({title:"批量新增"}).window("open").window("center");
     });
     
     //单个新增保存
@@ -95,11 +95,11 @@ var editIndex = undefined;
 //行编辑
 function endEditing() {
     if (editIndex == undefined){return true}
-    if ($('#dgBatch').datagrid('validateRow', editIndex)) {
-        /* var ed = $('#dgBatch').datagrid('getEditor', {index:editIndex,field:'productid'});
+    if ($('#addBatchDatagrid').datagrid('validateRow', editIndex)) {
+        /* var ed = $('#addBatchDatagrid').datagrid('getEditor', {index:editIndex,field:'productid'});
         var productname = $(ed.target).combobox('getText');
-        $('#dgBatch').datagrid('getRows')[editIndex]['productname'] = productname; */
-        $('#dgBatch').datagrid('endEdit', editIndex);
+        $('#addBatchDatagrid').datagrid('getRows')[editIndex]['productname'] = productname; */
+        $('#addBatchDatagrid').datagrid('endEdit', editIndex);
         editIndex = undefined;
         return true;
     } else {
@@ -109,28 +109,28 @@ function endEditing() {
 //行新增
 function append() {
     if (endEditing()) {
-        $('#dgBatch').datagrid('appendRow', {});
-        editIndex = $('#dgBatch').datagrid('getRows').length-1;
-        $('#dgBatch').datagrid('selectRow', editIndex)
+        $('#addBatchDatagrid').datagrid('appendRow', {});
+        editIndex = $('#addBatchDatagrid').datagrid('getRows').length-1;
+        $('#addBatchDatagrid').datagrid('selectRow', editIndex)
                 .datagrid('beginEdit', editIndex);
     }
 }
 //行删除
 function removeit() {
     if (editIndex == undefined){return;}
-    $('#dgBatch').datagrid('cancelEdit', editIndex)
+    $('#addBatchDatagrid').datagrid('cancelEdit', editIndex)
             .datagrid('deleteRow', editIndex);
     editIndex = undefined;
 }
 //行单击事件
-function onClickBatchRow(index){
+function onClickRow(index){
     if (editIndex != index){
         if (endEditing()){
-            $('#dgBatch').datagrid('selectRow', index)
+            $('#addBatchDatagrid').datagrid('selectRow', index)
                     .datagrid('beginEdit', index);
             editIndex = index;
         } else {
-            $('#dgBatch').datagrid('selectRow', editIndex);
+            $('#addBatchDatagrid').datagrid('selectRow', editIndex);
         }
     }
 }

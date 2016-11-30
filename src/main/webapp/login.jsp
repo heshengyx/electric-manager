@@ -61,7 +61,7 @@
         	var $form = $('#loginForm');
         	$.post($form.attr('action'), $form.serialize(), function(result) {
 		    	if (result.status) {
-		    	  	window.location.href = '${ctx}/manager/organization';
+		    	  	window.location.href = '${ctx}/manager';
 		      	} else {
 		      		$.messager.alert({
 						title: '消息',
