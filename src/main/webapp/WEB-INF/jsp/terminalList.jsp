@@ -86,7 +86,7 @@
                 draggable:true,
                 collapsible:false"
                 style="width:350px;height:400px;">
-        <div id="addTools" style="height:auto">
+        <div id="addTools">
             <a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="append()">添加行</a>
             <a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true" onclick="removeit()">删除行</a>
             <a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-save',plain:true" onclick="saveBatch()">保存</a>
@@ -132,10 +132,12 @@
 	    </table>
 	    </form>
 	    <!-- search -->
+	    <!-- datagrid -->
 	    <form id="saveAppendForm" method="post">
 	    <input type="hidden" name="orgId" value="${param.orgId}">
         <table id="appendBatchDatagrid" style="width:100%;"></table>
         </form>
+        <!-- datagrid -->
         </div>
     </div>
     <!-- 添加 -->

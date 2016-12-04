@@ -35,6 +35,14 @@
         .menu-accordion {
         	padding: 10px 10px 10px 5px;
         }
+        .easyui-accordion ul{list-style-type:none;margin:0px; padding:10px;}
+		.easyui-accordion ul li{padding:0px;}
+		.easyui-accordion ul li a{line-height:24px;text-decoration: none;}
+		.easyui-accordion ul li div{margin:2px 0px;padding-left:10px;padding-top:2px;}
+		.easyui-accordion ul li div.hover{background:#E0ECFF;cursor:pointer;}
+		.easyui-accordion ul li div.hover a{color:#416AA3;}
+		.easyui-accordion ul li div.selected{background:#E0ECFF;cursor:default;}
+		.easyui-accordion ul li div.selected a{color:#416AA3; font-weight:bold;}
 		</style>
 		<sitemesh:write property="head" />
 	</head>
@@ -48,25 +56,29 @@
         </div>
         <div data-options="region:'west',split:true,iconCls:'icon-application_side_tree'" title="导航菜单" style="width:20%;min-width:180px;">
             <div class="easyui-accordion" style="border:0;height:100%;" id="menuTree">
-			    <div class="menu-accordion" title="组织机构" data-options="iconCls:'icon-chart_organisation',selected:true">
-			        <ul class="easyui-tree">
-			        	<li><a href="javascript:void(0);" onclick="openTab('机构管理', '${ctx}/manager/organization/list', true)">机构管理</a></li>
+                <div title="实时数据" data-options="iconCls:'icon-report',selected:true">
+                    <ul class="easyui-tree trees"></ul>
+                </div>
+			    <div title="组织机构" data-options="iconCls:'icon-chart_organisation'">
+			        <ul>
+			        	<li><div><a target="mainFrame" href="${ctx}/manager/organization/list"><span class="icon icon-add"></span>机构管理</a></div></li>
 			        </ul>
 			        <!-- <ul class="easyui-tree" id="trees"></ul> -->
 			    </div>
-			    <div class="menu-accordion" title="终端管理" data-options="iconCls:'icon-computer'">
-			        <ul class="easyui-tree">
+			    <div title="终端管理" data-options="iconCls:'icon-computer'">
+			        <%-- <ul>
 						<li><a href="javascript:void(0);" onclick="openTab('终端列表', '${ctx}/manager/terminal/list', true)">终端列表</a></li>
 						<li><a href="javascript:void(0);" onclick="openTab('终端类别', '${ctx}/manager/style/list', true)">终端类别</a></li>
-					</ul>
+					</ul> --%>
+					<ul>
+                        <li><div><a target="mainFrame" href="${ctx}/manager/terminal/list"><span class="icon icon-add"></span>终端列表</a></div></li>
+                        <li><div><a target="mainFrame" href="${ctx}/manager/style/list"><span class="icon icon-add"></span>终端类别</a></div></li>
+                    </ul>
 			    </div>
-			    <div class="menu-accordion" title="实时数据" data-options="iconCls:'icon-report'">
-			        <ul class="easyui-tree trees"></ul>
-			    </div>
-			    <div class="menu-accordion" title="用户管理" data-options="iconCls:'icon-user'">
+			    <div title="用户管理" data-options="iconCls:'icon-user'">
                     content3
                 </div>
-                <div class="menu-accordion" title="系统管理" data-options="iconCls:'icon-wrench'">
+                <div title="系统管理" data-options="iconCls:'icon-wrench'">
                     content3
                 </div>
 			</div>
@@ -106,6 +118,18 @@
                     } */
                 }
             });
+			
+			$('.easyui-accordion li a').click(function(){
+		        var text = $(this).text();
+		        var url = $(this).attr("href");
+		        openTab(text, url, true);
+		        $('.easyui-accordion li div').removeClass("selected");
+		        $(this).parent().addClass("selected");
+		    }).hover(function(){
+		        $(this).parent().addClass("hover");
+		    },function(){
+		        $(this).parent().removeClass("hover");
+		    });
 		});
 		function openTab(name, url, flag){
 			if ($('#tab').tabs('exists', name)){
@@ -115,7 +139,7 @@
 					title: name,
 					//href: url,
 					closable: flag,
-					content: '<iframe scrolling="no" frameborder="0"  src="'+url+'" style="width:100%;height:100%;"></iframe>'
+					content: '<iframe name="mainFrame" scrolling="no" frameborder="0"  src="'+url+'" style="width:100%;height:100%;"></iframe>'
 					/* bodyCls: 'content-doc',
 					extractor: function(data){
 						return data;

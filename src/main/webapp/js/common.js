@@ -13,6 +13,7 @@ $(function() {
     
 	//打开批量新增界面
     $('#addBatchBtn').click(function() {
+    	removeAll();
         append();
         $("#addBatchWin").window({title:"批量新增"}).window("open").window("center");
     });
@@ -121,6 +122,16 @@ function removeit() {
     $('#addBatchDatagrid').datagrid('cancelEdit', editIndex)
             .datagrid('deleteRow', editIndex);
     editIndex = undefined;
+}
+//行删除全部
+function removeAll() {
+	var item = $('#addBatchDatagrid').datagrid('getRows');
+	if (item) {
+		for (var i = item.length - 1; i >= 0; i--) {
+			var index = $('#addBatchDatagrid').datagrid('getRowIndex', item[i]);
+			$('#addBatchDatagrid').datagrid('deleteRow', index);
+		}
+	}
 }
 //行单击事件
 function onClickRow(index){
