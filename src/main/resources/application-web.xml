@@ -52,6 +52,14 @@
             <value>com.grgbanking.electric.service.ITreeService</value>
         </property>
     </bean>
+    <bean id="instantaneousService" class="org.springframework.remoting.caucho.HessianProxyFactoryBean">
+        <property name="serviceUrl">
+            <value>http://127.0.0.1:8190/hessian/instantaneousService</value>
+        </property>
+        <property name="serviceInterface">
+            <value>com.grgbanking.electric.service.IInstantaneousService</value>
+        </property>
+    </bean>
     <!-- application-web-conf -->
 	
 	<bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">  

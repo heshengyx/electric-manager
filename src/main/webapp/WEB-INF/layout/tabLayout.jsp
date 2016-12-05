@@ -19,7 +19,9 @@
 	
 	<body class="easyui-layout">
 		<!-- content -->
+		<div data-options="region:'center',border:false">
 		<sitemesh:write property="body" />
+		</div>
 		<!-- content -->
 		<!-- js -->
 		<script type="text/javascript" src="${ctx}/js/jquery.min.js"></script>

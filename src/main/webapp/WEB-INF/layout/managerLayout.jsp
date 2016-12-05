@@ -110,26 +110,22 @@
                 url: "${ctx}/manager/tree?terminalFlag=1",
                 lines: true,
                 onClick: function(node) {
-                	console.log(node);
-                    /* if (node.children) {
-                    	openTab(node.text, '${ctx}/manager/organization/list?parentId=' + node.id, true);
-                    } else {
-                    	openTab(node.text, '${ctx}/manager/terminal/list?orgId=' + node.id, true);
-                    } */
+                    if (node.attributes) {
+                    	openTab(node.text, '${ctx}/manager/timeliness/list?id=' + node.id, true);
+                    }
                 }
             });
-			
-			$('.easyui-accordion li a').click(function(){
-		        var text = $(this).text();
-		        var url = $(this).attr("href");
-		        openTab(text, url, true);
-		        $('.easyui-accordion li div').removeClass("selected");
-		        $(this).parent().addClass("selected");
-		    }).hover(function(){
-		        $(this).parent().addClass("hover");
-		    },function(){
-		        $(this).parent().removeClass("hover");
-		    });
+			$('.easyui-accordion li a').click(function() {
+				var text = $(this).text();
+				var url = $(this).attr("href");
+				openTab(text, url, true);
+				$('.easyui-accordion li div').removeClass("selected");
+				$(this).parent().addClass("selected");
+			}).hover(function() {
+				$(this).parent().addClass("hover");
+			}, function() {
+				$(this).parent().removeClass("hover");
+			});
 		});
 		function openTab(name, url, flag){
 			if ($('#tab').tabs('exists', name)){
