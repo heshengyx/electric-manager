@@ -46,6 +46,7 @@
 		</style>
 		<sitemesh:write property="head" />
 	</head>
+	
 	<body class="easyui-layout">
 		<div data-options="region:'north',split:true,border:false" class="header-layout">
             <span class="header-right">用户：<shiro:principal property="name" />，欢迎使用  <a href="javascript:void(0);" id="modify">修改密码</a> <a href="javascript:void(0);" id="logout">安全退出</a></span>
@@ -62,6 +63,7 @@
 			    <div title="组织机构" data-options="iconCls:'icon-chart_organisation'">
 			        <ul>
 			        	<li><div><a target="mainFrame" href="${ctx}/manager/organization/list"><span class="icon icon-add"></span>机构管理</a></div></li>
+			        	<li><div><a target="mainFrame" href="${ctx}/manager/associate/list"><span class="icon icon-add"></span>关联终端</a></div></li>
 			        </ul>
 			        <!-- <ul class="easyui-tree" id="trees"></ul> -->
 			    </div>

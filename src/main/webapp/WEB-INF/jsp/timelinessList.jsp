@@ -7,46 +7,46 @@
     </head>
     
     <body>
-	    <!-- content -->
-	    <div style="padding:5px;">
-	    	<div id="tabs" class="easyui-tabs" style="width:100%;">
-			    <div title="瞬时数据" style="display:none;">
-			    	<!-- search -->
-				    <form class="data-form" id="searchForm" method="post">
-				    <table>
-				        <tr>
-				            <td class="td-right">采样时间：</td>
-				            <td>
-				            <input class="easyui-datebox" type="text" id="createDateBeginQuery" style="width:100px;">~
-				            <input class="easyui-datebox" type="text" id="createDateEndQuery" style="width:100px;">&nbsp;&nbsp;
-				            <a class="easyui-linkbutton" id="searchBtn" href="javascript:void(0);" data-options="iconCls:'icon-search'">查询</a>&nbsp;
-				            <a class="easyui-linkbutton" id="resetBtn" href="javascript:void(0);" data-options="iconCls:'icon-back'">重置</a>
-				            </td>
-				        </tr>
-				    </table>
-				    </form>
-				    <!-- search -->
-				    <div id="instantaneousTools">
-				        <a class="easyui-linkbutton" href="javascript:void(0);" data-options="iconCls:'icon-calculator_edit',plain:true" id="addBtn">人工补采</a>
-				        <a class="easyui-linkbutton" href="javascript:void(0);" data-options="iconCls:'icon-table_edit',plain:true" id="addBatchBtn">实时抄读</a>
+	    <div data-options="region:'center',border:false">
+		    <div style="padding:5px;">
+		    	<div id="tabs" class="easyui-tabs" style="width:100%;">
+				    <div title="瞬时数据" style="display:none;">
+				    	<!-- search -->
+					    <form class="data-form" id="searchForm" method="post">
+					    <table>
+					        <tr>
+					            <td class="td-right">采样时间：</td>
+					            <td>
+					            <input class="easyui-datebox" type="text" id="createDateBeginQuery" style="width:100px;">~
+					            <input class="easyui-datebox" type="text" id="createDateEndQuery" style="width:100px;">&nbsp;&nbsp;
+					            <a class="easyui-linkbutton" id="searchBtn" href="javascript:void(0);" data-options="iconCls:'icon-search'">查询</a>&nbsp;
+					            <a class="easyui-linkbutton" id="resetBtn" href="javascript:void(0);" data-options="iconCls:'icon-back'">重置</a>
+					            </td>
+					        </tr>
+					    </table>
+					    </form>
+					    <!-- search -->
+					    <div id="instantaneousTools">
+					        <a class="easyui-linkbutton" href="javascript:void(0);" data-options="iconCls:'icon-calculator_edit',plain:true" id="addBtn">人工补采</a>
+					        <a class="easyui-linkbutton" href="javascript:void(0);" data-options="iconCls:'icon-table_edit',plain:true" id="addBatchBtn">实时抄读</a>
+					    </div>
+				        <table id="instantaneousDatagrid" style="width:100%;height:auto;"></table>
 				    </div>
-			        <table id="instantaneousDatagrid" style="width:100%;height:auto;"></table>
-			    </div>
-			    <div title="曲线数据" style="overflow:auto;padding:20px;display:none;">
-			        tab2
-			    </div>
-			    <div title="日冻结数据" style="overflow:auto;padding:20px;display:none;">
-			        tab3
-			    </div>
-			    <div title="月冻结数据" style="overflow:auto;padding:20px;display:none;">
-			        tab2
-			    </div>
-			    <div title="事件量" style="overflow:auto;padding:20px;display:none;">
-			        tab2
-			    </div>
-			</div>
+				    <div title="曲线数据" style="overflow:auto;padding:20px;display:none;">
+				        tab2
+				    </div>
+				    <div title="日冻结数据" style="overflow:auto;padding:20px;display:none;">
+				        tab3
+				    </div>
+				    <div title="月冻结数据" style="overflow:auto;padding:20px;display:none;">
+				        tab2
+				    </div>
+				    <div title="事件量" style="overflow:auto;padding:20px;display:none;">
+				        tab2
+				    </div>
+				</div>
+		    </div>
 	    </div>
-	    <!-- content -->
 	    <jscript>
 	    <script type="text/javascript" src="${ctx}/js/format.js"></script>
 	    <!-- js -->
@@ -64,20 +64,20 @@
 	    	}); */
 	    	$('#instantaneousDatagrid').datagrid({
 	    		url: '${ctx}/manager/instantaneous/query',
-                toolbar: '#instantaneousTools',
-                idField: "id",
-                queryParams: {terminalId: '${param.id}'},
-                fixed: true,
-                autoRowHeight: true,
-                fitColumns: true,
-                showFooter: true,
-                pagination: true,
-                pageNumber: 1,
-                pageSize: 20,
-                singleSelect: false,
-                rownumbers: true,
-                selectOnCheck: true,
-                checkOnSelect: true,
+	               toolbar: '#instantaneousTools',
+	               idField: "id",
+	               queryParams: {terminalId: '${param.id}'},
+	               fixed: true,
+	               autoRowHeight: true,
+	               fitColumns: true,
+	               showFooter: true,
+	               pagination: true,
+	               pageNumber: 1,
+	               pageSize: 20,
+	               singleSelect: false,
+	               rownumbers: true,
+	               selectOnCheck: true,
+	               checkOnSelect: true,
 	    	    columns:[[
 	    	        {field: 'terminalCode',title: '监测点编号'},
 	    	        {field: 'sampleTime',title: '采样时间', formatter:function(val, row, idx) {

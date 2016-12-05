@@ -14,16 +14,16 @@ import com.grgbanking.electric.service.ITreeService;
 import com.grgbanking.electric.tree.Tree;
 
 @Controller
-@RequestMapping("/manager/tree")
-public class TreeController {
+@RequestMapping("/manager")
+public class OperationContoller extends BaseController {
 
 	private final static Logger LOGGER = LoggerFactory
-			.getLogger(TreeController.class);
+			.getLogger(OperationContoller.class);
 	
 	@Autowired
 	private ITreeService treeService;
 	
-	@RequestMapping("")
+	@RequestMapping("/tree")
 	@ResponseBody
 	public Object tree(OrganizationQueryParam param) {
 		List<Tree> data = null;
@@ -33,5 +33,15 @@ public class TreeController {
 			LOGGER.error("获取数据失败", e);
 		}
 		return data;
+	}
+	
+	@RequestMapping("/timeliness/list")
+	public String timeliness() {
+		return "timelinessList";
+	}
+	
+	@RequestMapping("/associate/list")
+	public String associate() {
+		return "associateList";
 	}
 }
