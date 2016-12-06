@@ -7,6 +7,8 @@
     <mapping path="/manager/style/list" decorator="/WEB-INF/layout/tabLayout.jsp"/>
     <mapping path="/manager/timeliness/list" decorator="/WEB-INF/layout/tabLayout.jsp"/>
     <mapping path="/manager/associate/list" decorator="/WEB-INF/layout/tabLayout.jsp"/>
+    <mapping path="/manager/permission/list" decorator="/WEB-INF/layout/tabLayout.jsp"/>
+    <mapping path="/manager/role/list" decorator="/WEB-INF/layout/tabLayout.jsp"/>
     <!-- sitemesh-conf -->
 	
 	<!-- 排除，不进行装饰的路径 -->

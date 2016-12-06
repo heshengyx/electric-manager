@@ -69,8 +69,8 @@
 			    </div>
 			    <div title="终端管理" data-options="iconCls:'icon-computer'">
 			        <%-- <ul>
-						<li><a href="javascript:void(0);" onclick="openTab('终端列表', '${ctx}/manager/terminal/list', true)">终端列表</a></li>
-						<li><a href="javascript:void(0);" onclick="openTab('终端类别', '${ctx}/manager/style/list', true)">终端类别</a></li>
+						<li><a href="javascript:void(0);" onclick="openTab('终端列表', '${ctx}/manager/permission/list', true)">终端列表</a></li>
+						<li><a href="javascript:void(0);" onclick="openTab('终端类别', '${ctx}/manager/role/list', true)">终端类别</a></li>
 					</ul> --%>
 					<ul>
                         <li><div><a target="mainFrame" href="${ctx}/manager/terminal/list"><span class="icon icon-add"></span>终端列表</a></div></li>
@@ -78,7 +78,10 @@
                     </ul>
 			    </div>
 			    <div title="用户管理" data-options="iconCls:'icon-user'">
-                    content3
+                    <ul>
+                        <li><div><a href="javascript:void(0);" onclick="openTab('权限管理', '${ctx}/manager/permission/list', true)"><span class="icon icon-add"></span>权限管理</a></div></li>
+                        <li><div><a href="javascript:void(0);" onclick="openTab('角色管理', '${ctx}/manager/role/list', true)"><span class="icon icon-add"></span>角色管理</a></div></li>
+                    </ul>
                 </div>
                 <div title="系统管理" data-options="iconCls:'icon-wrench'">
                     content3
@@ -120,7 +123,7 @@
 			$('.easyui-accordion li a').click(function() {
 				var text = $(this).text();
 				var url = $(this).attr("href");
-				openTab(text, url, true);
+				//openTab(text, url, true);
 				$('.easyui-accordion li div').removeClass("selected");
 				$(this).parent().addClass("selected");
 			}).hover(function() {
