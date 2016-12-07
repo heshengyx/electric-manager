@@ -20,13 +20,13 @@
 		    <table>
 		        <tr>
 		            <td>终端名称：</td>
-		            <td><input type="text" id="name" style="width:150px;"></td>
+		            <td><input type="text" id="nameQuery" style="width:150px;"></td>
 		            <td class="td-right">终端编码：</td>
-		            <td><input type="text" id="code" style="width:100px;"></td>
+		            <td><input type="text" id="codeQuery" style="width:100px;"></td>
 		            <td class="td-right">创建时间：</td>
 		            <td>
-		            <input class="easyui-datebox" type="text" id="createDateBegin" style="width:100px;">~
-		            <input class="easyui-datebox" type="text" id="createDateEnd" style="width:100px;"></td>
+		            <input class="easyui-datebox" type="text" id="createDateBeginQuery" style="width:100px;">~
+		            <input class="easyui-datebox" type="text" id="createDateEndQuery" style="width:100px;"></td>
 		        </tr>
 		        <tr>
 		            <td></td>
@@ -43,6 +43,7 @@
 				<a class="easyui-linkbutton" href="javascript:void(0);" data-options="iconCls:'icon-add',plain:true" id="addBtn">新增</a>
 				<a class="easyui-linkbutton" href="javascript:void(0);" data-options="iconCls:'icon-remove',plain:true" id="deleteBtn">删除</a>
 				<a class="easyui-linkbutton" href="javascript:void(0);" data-options="iconCls:'icon-control_add_blue',plain:true" id="addBatchBtn">批量</a>
+				<a class="easyui-linkbutton" href="javascript:void(0);" data-options="iconCls:'icon-computer_add',plain:true" id="appendBatchBtn">添加</a>
 			</div>
 			<table id="datagrid" style="width:100%;"></table>
 			<!-- datagrid -->
@@ -105,6 +106,45 @@
 		        <form id="addBatchForm" method="post"></form>
 		    </div>
 			<!-- 批量 -->
+			<!-- 添加 -->
+		    <div class="easyui-window" id="appendBatchWin" data-options="modal:true,closed:true,resizable:false,
+		                minimizable:false,
+		                maximizable:false,
+		                draggable:true,
+		                collapsible:false"
+		                style="width:500px;height:350px;">
+		        <div id="appendTools">
+		            <a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-save',plain:true" id="saveAppendBtn">保存</a>
+		        </div>
+		        <div class="tag-content">
+		        <!-- search -->
+		        <form class="data-form" id="appendSearchForm" method="post">
+			    <table>
+			        <tr>
+			        	<td>终端名称：</td>
+						<td><input type="text" id="nameAppendQuery" style="width:150px;"></td>
+						<td class="td-right">终端编码：</td>
+						<td><input type="text" id="codeAppendQuery" style="width:100px;"></td>
+			        </tr>
+			        <tr>
+			            <td></td>
+			            <td colspan="5">
+			            <a class="easyui-linkbutton" id="searchAppendBtn" href="javascript:void(0);" data-options="iconCls:'icon-search'">查询</a>&nbsp;
+			            <a class="easyui-linkbutton" id="resetAppendBtn" href="javascript:void(0);" data-options="iconCls:'icon-back'">重置</a>
+			            </td>
+			        </tr>
+			    </table>
+			    </form>
+			    <!-- search -->
+			    <!-- datagrid -->
+			    <form id="saveAppendForm" method="post">
+			    <input type="hidden" name="orgId" id="appendOrgId">
+		        <table id="appendBatchDatagrid" style="width:100%;"></table>
+		        </form>
+		        <!-- datagrid -->
+		        </div>
+		    </div>
+		    <!-- 添加 -->
 			</div>
 			<!-- content -->
         </div>
@@ -118,6 +158,7 @@
                 url: '${ctx}/manager/terminal/query',
                 toolbar: '#tools',
                 idField: "id",
+                queryParams: {orgId: '0'},
                 autoRowHeight: true,
                 fitColumns: true,
                 showFooter: true,
@@ -145,82 +186,70 @@
 		    
 		    $('#searchBtn').click(function() {
 		    	$('#datagrid').datagrid('load', {
-		    	    name: $('#name').val(),
-		    	    code: $('#code').val(),
+		    	    name: $('#nameQuery').val(),
+		    	    code: $('#codeQuery').val(),
 		    	    orgId: $('#orgId').val(),
-		    	    createDateBegin: $('#createDateBegin').datebox('getValue'),
-		    	    createDateEnd: $('#createDateEnd').datebox('getValue')
+		    	    createDateBegin: $('#createDateBeginQuery').datebox('getValue'),
+		    	    createDateEnd: $('#createDateEndQuery').datebox('getValue')
 		    	});
 		    });
 		    
-		    $('#editForm').form({
-			    url: '${ctx}/manager/organization/saveOrUpdate',
-			    onSubmit: function() {
-			    	var isValid = $(this).form('validate');
-					if (!isValid) {$.messager.progress('close');}
-					return isValid;
-			    },
-			    success: function(result) {
-			    	var result = $.parseJSON(result);
-			    	$.messager.progress('close');
-					if (result.status) {
-						$.messager.alert('消息', '保存成功', 'info', function(r) {
-							$('#editWin').window('close');
-							trees();
-							$('#datagrid').datagrid('reload');
-							$('#editForm').form('reset');
-						});
-					} else {
-						$.messager.alert('消息', result.message, 'error');
-					}
-			    }
-			});
-
-			$('#deleteBtn').click(function() {
-				var rows = $('#datagrid').datagrid('getChecked');
-				if (!rows.length) {
-					$.messager.alert('消息', '请至少选择一条记录', 'error');
-				} else {
-					$.messager.confirm({
-						title: '消息',
-						ok: '确定',
-						cancel: '取消',
-						msg: '确定要删除吗?',
-						fn: function(r){
-							if (r){
-								$.messager.progress();
-								var url = "${ctx}/manager/organization/deleteBatch"
-								var params = {
-									ids: getRowIds(rows)	
-								};
-								$.post(url, params, function(result) {
-									$.messager.progress('close');
-						        	if (result.status) {
-			                            $.messager.alert('消息', '删除成功', 'info');  
-			                            trees();
-			                            //重新加载
-			                            $('#datagrid').datagrid('reload');
-			                            //取消选择行
-			                            $('#datagrid').datagrid('clearSelections');
-						        	} else {
-										$.messager.alert('消息', result.message, 'error');
-									}
-						      	}, 'json');
-							}
-						}
-					});
-				}
-			});
-			
+			//打开添加界面
+	        $('#appendBatchBtn').click(function() {
+	        	$('#appendBatchDatagrid').datagrid({
+	                url: '${ctx}/manager/terminal/queryData',
+	                toolbar: '#appendTools',
+	                idField: "id",
+	                autoRowHeight: true,
+	                fitColumns: true,
+	                showFooter: true,
+	                pagination: true,
+	                pageNumber: 1,
+	                pageSize: 20,
+	                singleSelect: false,
+	                rownumbers: true,
+	                selectOnCheck: true,
+	                checkOnSelect: true,
+	                columns: [[
+	                    {field: 'id', title: '选择', width: 30, checkbox: true},
+	                    {field: 'name', title: '终端名称'},
+	    				{field: 'code', title: '终端编号'},
+	    				{field: 'styleName', title: '终端类别'}
+	                ]]
+	            });
+	        	$("#appendBatchWin").window({title:"批量添加"}).window("open").window("center");
+	        });
+	        
+	        $('#saveAppendBtn').click(function() {
+	        	$.messager.progress();
+	        	var url = "${ctx}/manager/terminal/updateByIds"
+				$.post(url, $('#saveAppendForm').serialize(), function(result) {
+					$.messager.progress('close');
+	                if (result.status) {
+	                	$('#appendBatchWin').window('close');
+	                    $('#datagrid').datagrid('reload');
+	                } else {
+	                    $.messager.alert({
+	                        title: '消息',
+	                        ok: '确定',
+	                        msg: result.message
+	                    });
+	                }
+	            }, 'json');
+	        });
+	        
+	        submitForm('${ctx}/manager/terminal/saveOrUpdate');
+	        deleteRow('${ctx}/manager/terminal/deleteByIds');
 			trees();
             styles('styleEdit');
 	    });
 	    function trees() {
             $('#trees').tree({
-                url: "${ctx}/manager/tree",
+                url: "${ctx}/manager/organization/tree",
                 lines: true,
                 onClick: function(node) {
                 	$('#orgId').val(node.id);
+                	$('#appendOrgId').val(node.id);
                     $('#datagrid').datagrid('load', {
                         orgId: $('#orgId').val()
                     });
@@ -229,15 +258,16 @@
         }
 	    function updateById(id) {
 	        $.messager.progress();
-	        var url = "${ctx}/manager/organization/getById"
+	        var url = "${ctx}/manager/terminal/getById?random="+ Math.random();
 	        var params = {id: id};
 	        $.post(url, params, function(result) {
 	            $.messager.progress('close');
 	            if (result.status) {
 	                $('#dataId').val(result.data.id);
 	                $('#nameEdit').val(result.data.name);
-	                $('#codeEdit').val(result.data.code);
-	                $("#editWin").window({title:"修改${title}"}).window("open").window("center");
+					$('#codeEdit').val(result.data.code);
+					$('#styleEdit').combobox('setValue', result.data.styleId);
+	                $("#editWin").window({title:"修改"}).window("open").window("center");
 	            } else {
 	                $.messager.alert('消息', result.message, 'error');
 	            }
@@ -249,18 +279,16 @@
 	            if (rows.length) {
 	                var inserted = $('#addBatchDatagrid').datagrid('getChanges', "inserted");
 	                if (inserted.length) {
-	                    var $form = $('#addBatchForm');
-	                    $form.children().remove();
+	                    var form = $('#addBatchForm');
+	                    form.children().remove();
 	                    for (var i=0; i<inserted.length; i++) {
-	                        $form.append('<input type="hidden" name="name" value="' + inserted[i].name + '">');
-	                        $form.append('<input type="hidden" name="code" value="' + inserted[i].code + '">');
+	                        form.append('<input type="hidden" name="name" value="' + inserted[i].name + '">');
+							form.append('<input type="hidden" name="code" value="' + inserted[i].code + '">');
 	                    }
-	                    $form.append('<input type="hidden" name="orgId" value="' + $('#orgId').val() + '">');
-	                    var url = "${ctx}/manager/organization/saveBatch";
-	                    $.post(url, $form.serialize(), function(result) {
+	                    var url = "${ctx}/manager/terminal/saveBatch"
+	                    $.post(url, form.serialize(), function(result) {
 	                        if (result.status) {
 	                            $('#addBatchWin').window('close');
-	                            trees();
 	                            $('#datagrid').datagrid('reload');
 	                        } else {
 	                            $.messager.alert({

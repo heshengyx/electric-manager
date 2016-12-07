@@ -62,19 +62,15 @@
                 </div>
 			    <div title="组织机构" data-options="iconCls:'icon-chart_organisation'">
 			        <ul>
-			        	<li><div><a target="mainFrame" href="${ctx}/manager/organization/list"><span class="icon icon-add"></span>机构管理</a></div></li>
-			        	<li><div><a target="mainFrame" href="${ctx}/manager/associate/list"><span class="icon icon-add"></span>关联终端</a></div></li>
+			        	<li><div><a href="javascript:void(0);" onclick="openTab('机构管理', '${ctx}/manager/organization/list', true)"><span class="icon icon-add"></span>机构管理</a></div></li>
+			        	<li><div><a href="javascript:void(0);" onclick="openTab('终端关联', '${ctx}/manager/associate/list', true)"><span class="icon icon-add"></span>终端关联</a></div></li>
 			        </ul>
 			        <!-- <ul class="easyui-tree" id="trees"></ul> -->
 			    </div>
 			    <div title="终端管理" data-options="iconCls:'icon-computer'">
-			        <%-- <ul>
-						<li><a href="javascript:void(0);" onclick="openTab('终端列表', '${ctx}/manager/permission/list', true)">终端列表</a></li>
-						<li><a href="javascript:void(0);" onclick="openTab('终端类别', '${ctx}/manager/role/list', true)">终端类别</a></li>
-					</ul> --%>
 					<ul>
-                        <li><div><a target="mainFrame" href="${ctx}/manager/terminal/list"><span class="icon icon-add"></span>终端列表</a></div></li>
-                        <li><div><a target="mainFrame" href="${ctx}/manager/style/list"><span class="icon icon-add"></span>终端类别</a></div></li>
+                        <li><div><a href="javascript:void(0);" onclick="openTab('终端列表', '${ctx}/manager/terminal/list', true)"><span class="icon icon-add"></span>终端列表</a></div></li>
+                        <li><div><a href="javascript:void(0);" onclick="openTab('终端类别', '${ctx}/manager/style/list', true)"><span class="icon icon-add"></span>终端类别</a></div></li>
                     </ul>
 			    </div>
 			    <div title="用户管理" data-options="iconCls:'icon-user'">
@@ -109,10 +105,8 @@
 					}
 				});
 			});
-			//trees();
-			//openTab('集团列表', '${ctx}/manager/organization/list', false);
 			$('.trees').tree({
-                url: "${ctx}/manager/tree?terminalFlag=1",
+                url: "${ctx}/manager/organization/tree?terminalFlag=1",
                 lines: true,
                 onClick: function(node) {
                     if (node.attributes) {
@@ -121,8 +115,8 @@
                 }
             });
 			$('.easyui-accordion li a').click(function() {
-				var text = $(this).text();
-				var url = $(this).attr("href");
+				//var text = $(this).text();
+				//var url = $(this).attr("href");
 				//openTab(text, url, true);
 				$('.easyui-accordion li div').removeClass("selected");
 				$(this).parent().addClass("selected");
@@ -132,12 +126,12 @@
 				$(this).parent().removeClass("hover");
 			});
 		});
-		function openTab(name, url, flag){
-			if ($('#tab').tabs('exists', name)){
-				$('#tab').tabs('select', name);
+		function openTab(title, url, flag){
+			if ($('#tab').tabs('exists', title)){
+				$('#tab').tabs('select', title);
 			} else {
 				$('#tab').tabs('add',{
-					title: name,
+					title: title,
 					//href: url,
 					closable: flag,
 					content: '<iframe name="mainFrame" scrolling="no" frameborder="0"  src="'+url+'" style="width:100%;height:100%;"></iframe>'
@@ -148,19 +142,6 @@
 				});
 			}
 		}
-		function trees() {
-            $('#trees').tree({
-                url: "${ctx}/manager/tree",
-                lines: true,
-                onClick: function(node) {
-                    if (node.children) {
-                    	openTab(node.text, '${ctx}/manager/organization/list?parentId=' + node.id, true);
-                    } else {
-                    	openTab(node.text, '${ctx}/manager/terminal/list?orgId=' + node.id, true);
-                    }
-                }
-            });
-        }
 		</script>
 		<sitemesh:write property="jscript" />
 		<!-- js -->

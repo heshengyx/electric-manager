@@ -18,7 +18,22 @@
 			<value>com.grgbanking.electric.service.IUserService</value>  
 		</property>
 	</bean>
-	
+	<bean id="permissionService" class="org.springframework.remoting.caucho.HessianProxyFactoryBean">
+		<property name="serviceUrl">  
+			<value>http://127.0.0.1:8190/hessian/permissionService</value>   
+		</property>   
+		<property name="serviceInterface">  
+			<value>com.grgbanking.electric.service.IPermissionService</value>  
+		</property>
+	</bean>
+	<bean id="roleService" class="org.springframework.remoting.caucho.HessianProxyFactoryBean">
+		<property name="serviceUrl">  
+			<value>http://127.0.0.1:8190/hessian/roleService</value>   
+		</property>   
+		<property name="serviceInterface">  
+			<value>com.grgbanking.electric.service.IRoleService</value>  
+		</property>
+	</bean>
 	<bean id="organizationService" class="org.springframework.remoting.caucho.HessianProxyFactoryBean">
 		<property name="serviceUrl">  
 			<value>http://127.0.0.1:8190/hessian/organizationService</value>   
@@ -58,6 +73,62 @@
         </property>
         <property name="serviceInterface">
             <value>com.grgbanking.electric.service.IInstantaneousService</value>
+        </property>
+    </bean>
+    <bean id="curveService" class="org.springframework.remoting.caucho.HessianProxyFactoryBean">
+        <property name="serviceUrl">
+            <value>http://127.0.0.1:8190/hessian/curveService</value>
+        </property>
+        <property name="serviceInterface">
+            <value>com.grgbanking.electric.service.ICurveService</value>
+        </property>
+    </bean>
+    <bean id="freezeDayService" class="org.springframework.remoting.caucho.HessianProxyFactoryBean">
+        <property name="serviceUrl">
+            <value>http://127.0.0.1:8190/hessian/freezeDayService</value>
+        </property>
+        <property name="serviceInterface">
+            <value>com.grgbanking.electric.service.IFreezeDayService</value>
+        </property>
+    </bean>
+    <bean id="freezeMonthService" class="org.springframework.remoting.caucho.HessianProxyFactoryBean">
+        <property name="serviceUrl">
+            <value>http://127.0.0.1:8190/hessian/freezeMonthService</value>
+        </property>
+        <property name="serviceInterface">
+            <value>com.grgbanking.electric.service.IFreezeMonthService</value>
+        </property>
+    </bean>
+    <bean id="eventService" class="org.springframework.remoting.caucho.HessianProxyFactoryBean">
+        <property name="serviceUrl">
+            <value>http://127.0.0.1:8190/hessian/eventService</value>
+        </property>
+        <property name="serviceInterface">
+            <value>com.grgbanking.electric.service.IEventService</value>
+        </property>
+    </bean>
+    <bean id="rolePermissionService" class="org.springframework.remoting.caucho.HessianProxyFactoryBean">
+        <property name="serviceUrl">
+            <value>http://127.0.0.1:8190/hessian/rolePermissionService</value>
+        </property>
+        <property name="serviceInterface">
+            <value>com.grgbanking.electric.service.IRolePermissionService</value>
+        </property>
+    </bean>
+    <bean id="roleOrganizationService" class="org.springframework.remoting.caucho.HessianProxyFactoryBean">
+        <property name="serviceUrl">
+            <value>http://127.0.0.1:8190/hessian/roleOrganizationService</value>
+        </property>
+        <property name="serviceInterface">
+            <value>com.grgbanking.electric.service.IRoleOrganizationService</value>
+        </property>
+    </bean>
+    <bean id="userRoleService" class="org.springframework.remoting.caucho.HessianProxyFactoryBean">
+        <property name="serviceUrl">
+            <value>http://127.0.0.1:8190/hessian/userRoleService</value>
+        </property>
+        <property name="serviceInterface">
+            <value>com.grgbanking.electric.service.IUserRoleService</value>
         </property>
     </bean>
     <!-- application-web-conf -->

@@ -45,6 +45,7 @@
                 <a class="easyui-linkbutton" href="javascript:void(0);" data-options="iconCls:'icon-add',plain:true" id="addBtn">新增</a>
                 <a class="easyui-linkbutton" href="javascript:void(0);" data-options="iconCls:'icon-remove',plain:true" id="deleteBtn">删除</a>
                 <a class="easyui-linkbutton" href="javascript:void(0);" data-options="iconCls:'icon-control_add_blue',plain:true" id="addBatchBtn">批量</a>
+                <a class="easyui-linkbutton" href="javascript:void(0);" data-options="iconCls:'icon-user_key',plain:true" id="assigneBtn">分配权限</a>
             </div>
             <table id="datagrid" style="width:100%;"></table>
             <!-- datagrid -->
@@ -99,6 +100,32 @@
 		        <form id="addBatchForm" method="post"></form>
 		    </div>
 		    <!-- 批量 -->
+		    <input type="hidden" id="selectedId">
+		    <!-- 权限分配 -->
+		    <div class="easyui-window" id="assigneWin" data-options="modal:true,closed:true,resizable:false,
+		                minimizable:false,
+		                maximizable:false,
+		                draggable:true,
+		                collapsible:false"
+		                style="width:430px;height:350px;padding:5px;">
+			    <div class="easyui-layout" fit="true">
+		            <div region="center" border="false">
+				        <div id="tabs" class="easyui-tabs" style="width:400px;height:260px;">
+						    <div title="操作权限" style="padding-top:10px;">
+						    	<ul id="permissionTrees" style="margin-left:20px;"></ul>
+						    </div>
+						    <div title="数据权限" style="overflow:auto;display:none;padding-top:10px;">
+						    	<ul id="organizationTrees" style="margin-left:20px;"></ul>
+						    </div>
+						</div>
+		            </div>
+		            <div region="south" border="false" style="text-align:right;padding:5px 0;">
+		            	<form id="addPermissionBatchForm" method="post"></form>
+		                <a class="easyui-linkbutton" data-options="iconCls:'icon-save'" href="javascript:void(0)" id="savePermissionBtn">保存</a>
+		            </div>
+				</div>
+		    </div>
+		    <!-- 权限分配 -->
 		    </div>
 	    </div>
 	    <jscript>
@@ -144,7 +171,45 @@
 	        
 	        submitForm('${ctx}/manager/role/saveOrUpdate');
 	        deleteRow('${ctx}/manager/role/deleteBatch');
-	        trees();
+	        
+	        $('#assigneBtn').click(function() {
+	        	var rows = $('#datagrid').datagrid('getChecked');
+	            if (!rows.length) {
+	                $.messager.alert('消息', '请至少选择一条记录', 'error');
+	            } else {
+	            	$('#selectedId').val(rows[0].id);
+	            	permissionTrees(rows[0].id);
+	            	organizationTrees(rows[0].id);
+	            	$("#assigneWin").window({title:"分配权限"}).window("open").window("center");
+	            }
+	        });
+	        
+	        $('#savePermissionBtn').click(function() {
+	        	var nodes = $('#permissionTrees').tree('getChecked');
+	        	var form = $('#addPermissionBatchForm');
+                form.children().remove();
+                if (nodes) {
+                	for (var i=0; i<nodes.length; i++) {
+                        form.append('<input type="hidden" name="permissionId" value="' + nodes[i].id + '">');
+                    }
+                	nodes = $('#organizationTrees').tree('getChecked');
+                	if (nodes) {
+                		for (var i=0; i<nodes.length; i++) {
+                            form.append('<input type="hidden" name="organizationId" value="' + nodes[i].id + '">');
+                        }
+                	}
+                	form.append('<input type="hidden" name="roleId" value="' + $('#selectedId').val() + '">');
+                	
+                	var url = '${ctx}/manager/rolePermission/saveBatch';
+                    $.post(url, form.serialize(), function(result) {
+                        if (result.status) {
+                        	$.messager.alert('消息', '保存成功', 'info');
+                        } else {
+                        	$.messager.alert('消息', result.message, 'error');
+                        }
+                    }, 'json');
+                }
+	        });
 	    });
 	    function updateById(id) {
 	        $.messager.progress();
@@ -174,7 +239,7 @@
 	                        form.append('<input type="hidden" name="name" value="' + inserted[i].name + '">');
 	                        form.append('<input type="hidden" name="code" value="' + inserted[i].code + '">');
 	                    }
-	                    var url = "${ctx}/manager/role/saveBatch"
+	                    var url = '${ctx}/manager/role/saveBatch';
 	                    $.post(url, form.serialize(), function(result) {
 	                        if (result.status) {
 	                            $('#addBatchWin').window('close');
@@ -191,9 +256,27 @@
 	            }
 	        }
 	    }
-	    function trees() {
-            $('#trees').tree({
-                url: "${ctx}/manager/tree",
+	    function permissionTrees(roleId) {
+	    	var url = '${ctx}/manager/permission/tree';
+	    	if (roleId) {
+	    		url += '?roleId=' + roleId;
+	    	}
+	    	
+	    	$('#permissionTrees').tree({
+                url: url,
+                lines: true,
+                checkbox: true,
+                onClick: function(node) {
+                }
+            });
+	    }
+	    function organizationTrees(roleId) {
+	    	var url = '${ctx}/manager/organization/tree';
+	    	if (roleId) {
+	    		url += '?roleId=' + roleId;
+	    	}
+            $('#organizationTrees').tree({
+                url: url,
                 lines: true,
                 checkbox: true,
                 onClick: function(node) {

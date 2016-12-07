@@ -24,12 +24,12 @@ public class OperationContoller extends BaseController {
 	@Autowired
 	private ITreeService treeService;
 	
-	@RequestMapping("/tree")
+	@RequestMapping("/organization/tree")
 	@ResponseBody
 	public Object tree(OrganizationQueryParam param) {
 		List<Tree> data = null;
 		try {
-			data = treeService.tree(param);
+			data = treeService.treeOrganization(param);
 		} catch (Exception e) {
 			LOGGER.error("获取数据失败", e);
 		}

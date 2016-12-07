@@ -1,5 +1,8 @@
 package com.grgbanking.electric.security;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 import org.apache.shiro.SecurityUtils;
@@ -9,6 +12,7 @@ import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.SimpleAuthenticationInfo;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authz.AuthorizationInfo;
+import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.PrincipalCollection;
@@ -16,10 +20,14 @@ import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessResourceFailureException;
 import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
 
+import com.grgbanking.electric.entity.Permission;
 import com.grgbanking.electric.entity.User;
+import com.grgbanking.electric.param.PermissionQueryParam;
+import com.grgbanking.electric.service.IPermissionService;
 import com.grgbanking.electric.service.IUserService;
 
 /**
@@ -36,6 +44,9 @@ public class SecurityRealm extends AuthorizingRealm {
 	
 	@Autowired
 	private IUserService userService;
+	
+	@Autowired
+	private IPermissionService permissionService;
 
 	/**
 	 * 授权
@@ -43,7 +54,30 @@ public class SecurityRealm extends AuthorizingRealm {
 	@Override
 	protected AuthorizationInfo doGetAuthorizationInfo(
 			PrincipalCollection principal) {
-		return null;
+		System.out.println("===========================doGetAuthorizationInfo");
+		SimpleAuthorizationInfo simpleAuthorInfo = null;
+		User user = (User) super
+				.getAvailablePrincipal(principal);
+		List<String> roleList = new ArrayList<String>();
+		List<String> permissionList = new ArrayList<String>();
+		
+		if (null != user) {
+			PermissionQueryParam param = new PermissionQueryParam();
+			param.setUserId(user.getId());
+			List<Permission> permissions = permissionService.queryPermissions(param);
+			if (!CollectionUtils.isEmpty(permissions)) {
+				for (Permission permission : permissions) {
+					System.out.println("getUrl======================" + permission.getUrl());
+					if (!StringUtils.isEmpty(permission.getName()) && !StringUtils.isEmpty(permission.getUrl())) {
+						permissionList.add(permission.getUrl());
+					}
+				}
+				simpleAuthorInfo = new SimpleAuthorizationInfo();
+				simpleAuthorInfo.addRoles(roleList);
+				simpleAuthorInfo.addStringPermissions(permissionList);
+			}
+		}
+		return simpleAuthorInfo;
 	}
 
 	/**

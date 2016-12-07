@@ -39,8 +39,9 @@
 		        /css/** = anon
 		        /js/** = anon
 		        /images/** = anon
-		        /fonts/** = anon
-		        /avatars/** = anon
+		        /locale/** = anon
+		        /plugins/** = anon
+		        /themes/** = anon
 		        /login.jsp = anon
 		        /unauthor.jsp = anon
 		        /404.jsp = anon
@@ -48,7 +49,8 @@
 		        /manager/login = anon
 		        /manager/logout = anon
 		       
-		        /manager/** = authc  
+		        <!-- /manager/** = authc -->
+		        /manager/permission/list = perms[admin:manage, admin:add]  
 			</value>  
 		</property>  
 		<!-- 
@@ -61,19 +63,26 @@
 		</property>
 		<property name="filterChainDefinitionMap" ref="chainDefinitionSectionMetaSource" />
 		-->
+		<!-- <property name="filterChainDefinitionMap" ref="chainDefinitionSectionMetaSource" /> -->
 	</bean>  
    
    	<bean id="chainDefinitionSectionMetaSource" class="com.grgbanking.electric.security.ChainDefinitionSectionMetaSource">  
 	   	<property name="filterChainDefinitions">  
         <value>  
-          	/login/** = anon
           	/css/** = anon
-          	/js/** = anon
-          	/images/** = anon
-          
-          	/admin/** = authc
-          	<!--/manage/** = perms[admin:manage] --> 
-          	<!--/security/logout = logout   --> 
+	        /js/** = anon
+	        /images/** = anon
+	        /locale/** = anon
+	        /plugins/** = anon
+	        /themes/** = anon
+	        /login.jsp = anon
+	        /unauthor.jsp = anon
+	        /404.jsp = anon
+	        /505.jsp = anon
+	        /manager/login = anon
+	        /manager/logout = anon
+	       
+	        /manager/** = authc
         </value>  
 	    </property>  
 	</bean>

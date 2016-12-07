@@ -105,7 +105,7 @@
 	    <script type="text/javascript">
 	    $(function() {
 	    	$('#treegrid').treegrid({
-				url: '${ctx}/manager/tree',
+				url: '${ctx}/manager/organization/tree',
 				toolbar: '#tools',
 				idField: 'id',
 				treeField: 'text',
@@ -131,8 +131,7 @@
 			});
 	    	
 	    	$('#parentIdEdit').combotree({
-	    	    url: '${ctx}/manager/tree',
-	    	    required: true
+	    	    url: '${ctx}/manager/organization/tree'
 	    	});
 		    
 		    $('#searchBtn').click(function() {
@@ -168,7 +167,7 @@
 			});
 	
 			$('#deleteBtn').click(function() {
-				var rows = $('#treegrid').datagrid('getChecked');
+				var rows = $('#treegrid').treegrid('getChecked');
 				if (!rows.length) {
 					$.messager.alert('消息', '请至少选择一条记录', 'error');
 				} else {
@@ -188,11 +187,10 @@
 									$.messager.progress('close');
 						        	if (result.status) {
 			                            $.messager.alert('消息', '删除成功', 'info');  
-			                            trees();
 			                            //重新加载
-			                            $('#treegrid').datagrid('reload');
+			                            $('#treegrid').treegrid('reload');
 			                            //取消选择行
-			                            $('#treegrid').datagrid('clearSelections');
+			                            $('#treegrid').treegrid('clearSelections');
 						        	} else {
 										$.messager.alert('消息', result.message, 'error');
 									}
@@ -203,27 +201,6 @@
 				}
 			});
 	    });
-	    function trees() {
-	           $('#trees').tree({
-	               url: "${ctx}/manager/tree",
-	               lines: true,
-	               onClick: function(node) {
-	                   /* if (node.children) {
-	                   	//openTab(node.text, '${ctx}/manager/organization/list?parentId=' + node.id, true);
-	                   } else {
-	                   	//openTab(node.text, '${ctx}/manager/terminal/list?orgId=' + node.id, true);
-	                   } */
-	                   if (node.attributes) {
-	                   	
-	                   } else {
-	                   	$('#parentId').val(node.id);
-	                       $('#treegrid').datagrid('load', {
-	                           parentId: $('#parentId').val()
-	                       });
-	                   }
-	               }
-	           });
-	       }
 	    function updateById(id) {
 	        $.messager.progress();
 	        var url = "${ctx}/manager/organization/getById"
@@ -243,9 +220,9 @@
 	    }
 	    function saveBatch() {
 	        if (endEditing()){
-	            var rows = $('#addBatchDatagrid').datagrid('getChanges');
+	            var rows = $('#addBatchDatagrid').treegrid('getChanges');
 	            if (rows.length) {
-	                var inserted = $('#addBatchDatagrid').datagrid('getChanges', "inserted");
+	                var inserted = $('#addBatchDatagrid').treegrid('getChanges', "inserted");
 	                if (inserted.length) {
 	                    var $form = $('#addBatchForm');
 	                    $form.children().remove();
@@ -258,8 +235,7 @@
 	                    $.post(url, $form.serialize(), function(result) {
 	                        if (result.status) {
 	                            $('#addBatchWin').window('close');
-	                            trees();
-	                            $('#treegrid').datagrid('reload');
+	                            $('#treegrid').treegrid('reload');
 	                        } else {
 	                            $.messager.alert({
 	                                title: '消息',
