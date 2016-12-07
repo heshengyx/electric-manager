@@ -61,6 +61,11 @@
 						<input class="easyui-validatebox" type="text" name="name" id="nameEdit" style="width:150px;" data-options="required:true"></td>
 					</tr>
 					<tr>
+                        <td align="right">权限编码：</td>
+                        <td>
+                        <input class="easyui-validatebox" type="text" name="code" id="codeEdit" style="width:150px;" data-options="required:true"></td>
+                    </tr>
+					<tr>
 						<td align="right">权限URL：</td>
 						<td>
 						<input class="easyui-validatebox" type="text" name="url" id="urlEdit" style="width:150px;" data-options="required:true"></td>
@@ -118,6 +123,9 @@
 				columns: [[
 					{field: 'id', title: '选择', width: 30, checkbox: true},
 			        {field: 'text', title: '权限名称'},
+			        {field: 'code', title: '权限编码', width: 200, formatter:function(val, row, idx) {
+                        return row.attributes.code;
+                    }},
 			        {field: 'url', title: '权限URL', width: 200, formatter:function(val, row, idx) {
                         return row.attributes.url;
                     }},
@@ -187,7 +195,6 @@
 									$.messager.progress('close');
 						        	if (result.status) {
 			                            $.messager.alert('消息', '删除成功', 'info');  
-			                            trees();
 			                            //重新加载
 			                            $('#treegrid').datagrid('reload');
 			                            //取消选择行
@@ -202,27 +209,6 @@
 				}
 			});
 	    });
-	    function trees() {
-	           $('#trees').tree({
-	               url: "${ctx}/manager/tree",
-	               lines: true,
-	               onClick: function(node) {
-	                   /* if (node.children) {
-	                   	//openTab(node.text, '${ctx}/manager/organization/list?parentId=' + node.id, true);
-	                   } else {
-	                   	//openTab(node.text, '${ctx}/manager/terminal/list?orgId=' + node.id, true);
-	                   } */
-	                   if (node.attributes) {
-	                   	
-	                   } else {
-	                   	$('#parentId').val(node.id);
-	                       $('#treegrid').datagrid('load', {
-	                           parentId: $('#parentId').val()
-	                       });
-	                   }
-	               }
-	           });
-	       }
 	    function updateById(id) {
 	        $.messager.progress();
 	        var url = "${ctx}/manager/organization/getById"
@@ -257,7 +243,6 @@
 	                    $.post(url, $form.serialize(), function(result) {
 	                        if (result.status) {
 	                            $('#addBatchWin').window('close');
-	                            trees();
 	                            $('#treegrid').datagrid('reload');
 	                        } else {
 	                            $.messager.alert({

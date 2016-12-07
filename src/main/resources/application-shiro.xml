@@ -34,7 +34,7 @@
 		<!-- 下面value值的第一个'/'代表的路径是相对于HttpServletRequest.getContextPath()的值来的 -->  
 		<!-- anon：它对应的过滤器里面是空的,什么都没做,这里.do和.jsp后面的*表示参数,比方说login.jsp?main这种 -->  
 		<!-- authc：该过滤器下的页面必须验证后才能访问,它是Shiro内置的一个拦截器org.apache.shiro.web.filter.authc.FormAuthenticationFilter -->
-		<property name="filterChainDefinitions">  
+		<!-- <property name="filterChainDefinitions">  
 			<value>  
 		        /css/** = anon
 		        /js/** = anon
@@ -49,10 +49,10 @@
 		        /manager/login = anon
 		        /manager/logout = anon
 		       
-		        <!-- /manager/** = authc -->
-		        /manager/permission/list = perms[admin:manage, admin:add]  
+		        /manager/permission/list = perms[admin:manage, admin:add]
+		        /manager/** = authc
 			</value>  
-		</property>  
+		</property> -->  
 		<!-- 
 		<property name="filterChainDefinitions">  
 			<value>  
@@ -63,12 +63,12 @@
 		</property>
 		<property name="filterChainDefinitionMap" ref="chainDefinitionSectionMetaSource" />
 		-->
-		<!-- <property name="filterChainDefinitionMap" ref="chainDefinitionSectionMetaSource" /> -->
+		<property name="filterChainDefinitionMap" ref="chainDefinitionSectionMetaSource" />
 	</bean>  
    
    	<bean id="chainDefinitionSectionMetaSource" class="com.grgbanking.electric.security.ChainDefinitionSectionMetaSource">  
 	   	<property name="filterChainDefinitions">  
-        <value>  
+            <value>  
           	/css/** = anon
 	        /js/** = anon
 	        /images/** = anon
@@ -81,10 +81,13 @@
 	        /505.jsp = anon
 	        /manager/login = anon
 	        /manager/logout = anon
-	       
-	        /manager/** = authc
-        </value>  
-	    </property>  
+            </value>  
+	    </property>
+	    <property name="authcs"> 
+			<map>
+			<entry key="/manager/**" value="authc" />
+			</map>
+		</property>  
 	</bean>
 	
 	<!-- 保证实现了Shiro内部lifecycle函数的bean执行 -->  

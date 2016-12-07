@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.grgbanking.electric.param.OrganizationQueryParam;
 import com.grgbanking.electric.param.PermissionQueryParam;
+import com.grgbanking.electric.param.RoleQueryParam;
 import com.grgbanking.electric.service.ITreeService;
 import com.grgbanking.electric.tree.Tree;
 
@@ -42,6 +43,18 @@ public class OperationContoller extends BaseController {
 		List<Tree> data = null;
 		try {
 			data = treeService.treePermission(param);
+		} catch (Exception e) {
+			LOGGER.error("获取数据失败", e);
+		}
+		return data;
+	}
+	
+	@RequestMapping("/role/tree")
+	@ResponseBody
+	public Object tree(RoleQueryParam param) {
+		List<Tree> data = null;
+		try {
+			data = treeService.treeRole(param);
 		} catch (Exception e) {
 			LOGGER.error("获取数据失败", e);
 		}

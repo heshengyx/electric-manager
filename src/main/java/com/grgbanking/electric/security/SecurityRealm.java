@@ -90,7 +90,9 @@ public class SecurityRealm extends AuthorizingRealm {
 		UsernamePasswordToken token = (UsernamePasswordToken) authcToken;
 		LOGGER.info("login token:{}", ReflectionToStringBuilder.toString(token,
 				ToStringStyle.MULTI_LINE_STYLE));
-		User user = userService.getUserByAccount(token.getUsername());
+		User user = new User();
+		user.setAccount(token.getUsername());
+		user = userService.getData(user);
 		if (null != user) {
 			String password = String.valueOf(token.getPassword());
 			if (user.getPassword().equals(password)) {

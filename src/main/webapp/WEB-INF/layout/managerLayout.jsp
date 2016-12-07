@@ -77,6 +77,7 @@
                     <ul>
                         <li><div><a href="javascript:void(0);" onclick="openTab('权限管理', '${ctx}/manager/permission/list', true)"><span class="icon icon-add"></span>权限管理</a></div></li>
                         <li><div><a href="javascript:void(0);" onclick="openTab('角色管理', '${ctx}/manager/role/list', true)"><span class="icon icon-add"></span>角色管理</a></div></li>
+                        <li><div><a href="javascript:void(0);" onclick="openTab('用户管理', '${ctx}/manager/user/list', true)"><span class="icon icon-add"></span>用户管理</a></div></li>
                     </ul>
                 </div>
                 <div title="系统管理" data-options="iconCls:'icon-wrench'">
