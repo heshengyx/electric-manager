@@ -54,11 +54,10 @@ public class SecurityRealm extends AuthorizingRealm {
 	@Override
 	protected AuthorizationInfo doGetAuthorizationInfo(
 			PrincipalCollection principal) {
-		System.out.println("===========================doGetAuthorizationInfo");
 		SimpleAuthorizationInfo simpleAuthorInfo = null;
 		User user = (User) super
 				.getAvailablePrincipal(principal);
-		List<String> roleList = new ArrayList<String>();
+		//List<String> roleList = new ArrayList<String>();
 		List<String> permissionList = new ArrayList<String>();
 		
 		if (null != user) {
@@ -67,13 +66,12 @@ public class SecurityRealm extends AuthorizingRealm {
 			List<Permission> permissions = permissionService.queryPermissions(param);
 			if (!CollectionUtils.isEmpty(permissions)) {
 				for (Permission permission : permissions) {
-					System.out.println("getUrl======================" + permission.getUrl());
-					if (!StringUtils.isEmpty(permission.getName()) && !StringUtils.isEmpty(permission.getUrl())) {
-						permissionList.add(permission.getUrl());
+					if (!StringUtils.isEmpty(permission.getCode()) && !StringUtils.isEmpty(permission.getUrl())) {
+						permissionList.add(permission.getCode());
 					}
 				}
 				simpleAuthorInfo = new SimpleAuthorizationInfo();
-				simpleAuthorInfo.addRoles(roleList);
+				//simpleAuthorInfo.addRoles(roleList);
 				simpleAuthorInfo.addStringPermissions(permissionList);
 			}
 		}

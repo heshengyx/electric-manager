@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.grgbanking.electric.data.UserData;
 import com.grgbanking.electric.entity.User;
-import com.grgbanking.electric.entity.User;
 import com.grgbanking.electric.json.JSONMessage;
 import com.grgbanking.electric.param.UserQueryParam;
 import com.grgbanking.electric.service.IUserService;

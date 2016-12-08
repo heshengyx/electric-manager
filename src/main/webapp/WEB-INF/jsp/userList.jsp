@@ -165,8 +165,8 @@
 	            });
 	        });
 	        
-	        submitForm('${ctx}/manager/role/saveOrUpdate');
-	        deleteRow('${ctx}/manager/role/deleteBatch');
+	        submitForm('${ctx}/manager/user/saveOrUpdate');
+	        deleteRow('${ctx}/manager/user/deleteBatch');
 	        
 	        $('#assigneBtn').click(function() {
 	        	var rows = $('#datagrid').datagrid('getChecked');
