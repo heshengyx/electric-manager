@@ -55,7 +55,7 @@
 						collapsible:false"
 						style="width:330px;height:200px;padding:10px;">
 			    <form id="editForm" method="post">
-				<input type="hidden" name="id" id="dataId">
+				<input type="hidden" name='id' id="dataId">
 				<input type="hidden" name="orgId" id="orgId">
 				<table class="table">
 					<tr>
@@ -157,9 +157,10 @@
 	    	$('#datagrid').datagrid({
                 url: '${ctx}/manager/terminal/query',
                 toolbar: '#tools',
-                idField: "id",
+                idField: 'id',
                 queryParams: {orgId: '0'},
                 autoRowHeight: true,
+                fixed: true,
                 fitColumns: true,
                 showFooter: true,
                 pagination: true,
@@ -199,7 +200,7 @@
 	        	$('#appendBatchDatagrid').datagrid({
 	                url: '${ctx}/manager/terminal/queryData',
 	                toolbar: '#appendTools',
-	                idField: "id",
+	                idField: 'id',
 	                autoRowHeight: true,
 	                fitColumns: true,
 	                showFooter: true,

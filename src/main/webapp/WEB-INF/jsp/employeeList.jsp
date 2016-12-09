@@ -46,7 +46,7 @@
 		                collapsible:false"
 		                style="width:330px;height:160px;padding:10px;">
 		        <form id="editForm" method="post">
-		        <input type="hidden" name="id" id="dataId">
+		        <input type="hidden" name='id' id="dataId">
 		        <table class="table">
 		            <tr>
 					    <td align="right">雇员姓名：</td>
@@ -100,8 +100,9 @@
 	        $('#datagrid').datagrid({
 	            url: '${ctx}/manager/employee/query',
 	            toolbar: '#tools',
-	            idField: "id",
+	            idField: 'id',
 	            autoRowHeight: true,
+	            fixed: true,
 	            fitColumns: true,
 	            showFooter: true,
 	            pagination: true,

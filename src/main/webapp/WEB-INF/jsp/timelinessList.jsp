@@ -141,11 +141,12 @@
 	    	$('#instantaneousDatagrid').datagrid({
 	    		url: '${ctx}/manager/instantaneous/query',
                	toolbar: '#instantaneousTools',
-               	idField: "id",
+               	idField: 'id',
                	queryParams: {terminalId: '${param.id}'},
                	fixed: true,
                	autoRowHeight: true,
                	fitColumns: true,
+               	striped: true,
                	showFooter: true,
                	pagination: true,
                	pageNumber: 1,
@@ -192,7 +193,7 @@
 	    	$('#curveDatagrid').datagrid({
 	    		url: '${ctx}/manager/curve/query',
                	toolbar: '#curveTools',
-               	idField: "id",
+               	idField: 'id',
                	queryParams: {terminalId: '${param.id}'},
                	fixed: true,
                	autoRowHeight: true,
@@ -237,7 +238,7 @@
 	    	$('#freezeDayDatagrid').datagrid({
 	    		url: '${ctx}/manager/freezeDay/query',
                	toolbar: '#freezeDayTools',
-               	idField: "id",
+               	idField: 'id',
                	queryParams: {terminalId: '${param.id}'},
                	fixed: true,
                	autoRowHeight: true,
@@ -312,7 +313,7 @@
 	    	$('#freezeMonthDatagrid').datagrid({
 	    		url: '${ctx}/manager/freezeMonth/query',
                	toolbar: '#freezeMonthTools',
-               	idField: "id",
+               	idField: 'id',
                	queryParams: {terminalId: '${param.id}'},
                	fixed: true,
                	autoRowHeight: true,
@@ -387,7 +388,7 @@
 	    	$('#eventDatagrid').datagrid({
 	    		url: '${ctx}/manager/event/query',
                	toolbar: '#eventTools',
-               	idField: "id",
+               	idField: 'id',
                	queryParams: {terminalId: '${param.id}'},
                	fixed: true,
                	autoRowHeight: true,

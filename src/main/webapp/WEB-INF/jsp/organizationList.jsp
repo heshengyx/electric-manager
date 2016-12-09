@@ -109,6 +109,7 @@
 				toolbar: '#tools',
 				idField: 'id',
 				treeField: 'text',
+				fixed: true,
 				fitColumns: true,
 				singleSelect: false,
 				autoRowHeight: false,

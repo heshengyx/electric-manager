@@ -57,7 +57,7 @@
 		                collapsible:false"
 		                style="width:330px;height:160px;padding:10px;">
 		        <form id="editForm" method="post">
-		        <input type="hidden" name="id" id="dataId">
+		        <input type="hidden" name='id' id="dataId">
 		        <table class="table">
 		            <tr>
 					    <td align="right">角色名称：</td>
@@ -137,8 +137,9 @@
 	        $('#datagrid').datagrid({
 	            url: '${ctx}/manager/role/query',
 	            toolbar: '#tools',
-	            idField: "id",
+	            idField: 'id',
 	            autoRowHeight: true,
+	            fixed: true,
 	            fitColumns: true,
 	            showFooter: true,
 	            pagination: true,

@@ -58,6 +58,24 @@
         <div data-options="region:'west',split:true,iconCls:'icon-application_side_tree'" title="导航菜单" style="width:20%;min-width:180px;">
             <div class="easyui-accordion" style="border:0;height:100%;" id="menuTree">
                 <div title="实时数据" data-options="iconCls:'icon-report',selected:true">
+                    <ul class="easyui-tree" id="tree1"></ul>
+                </div>
+                <div title="采集任务" data-options="iconCls:'icon-report_disk',selected:true">
+                    <ul class="easyui-tree" id="tree2"></ul>
+                </div>
+                <div title="监测点维护" data-options="iconCls:'icon-report_edit',selected:true">
+                    <ul class="easyui-tree trees"></ul>
+                </div>
+                <div title="采集器维护" data-options="iconCls:'icon-report_edit',selected:true">
+                    <ul class="easyui-tree trees"></ul>
+                </div>
+                <div title="升级管理" data-options="iconCls:'icon-report_go',selected:true">
+                    <ul class="easyui-tree trees"></ul>
+                </div>
+                <div title="流量管理" data-options="iconCls:'icon-report_picture',selected:true">
+                    <ul class="easyui-tree trees"></ul>
+                </div>
+                <div title="通道监测" data-options="iconCls:'icon-report_magnify',selected:true">
                     <ul class="easyui-tree trees"></ul>
                 </div>
 			    <div title="终端管理" data-options="iconCls:'icon-computer'">
@@ -102,7 +120,26 @@
 					}
 				});
 			});
-			$('.trees').tree({
+			
+			var url = '${ctx}/manager/organization/tree?terminalFlag=1&random='+ Math.random();
+	        var params = {};
+	        $.post(url, params, function(result) {
+	        	try {
+	        		/* $('.trees').tree({
+	        			data: result,
+	                    lines: true,
+	                    onClick: function(node) {
+	                        if (node.attributes) {
+	                        	openTab(node.text, '${ctx}/manager/timeliness/list?id=' + node.id, true);
+	                        }
+	                    }
+	                }); */
+	        		trees('tree1', 'timeliness', result);
+	        		trees('tree2', 'timeliness', result);
+	        	} catch(e){}
+	        }, 'json');
+	        
+			/* $('.trees').tree({
                 url: "${ctx}/manager/organization/tree?terminalFlag=1",
                 lines: true,
                 onClick: function(node) {
@@ -110,7 +147,7 @@
                     	openTab(node.text, '${ctx}/manager/timeliness/list?id=' + node.id, true);
                     }
                 }
-            });
+            }); */
 			$('.easyui-accordion li a').click(function() {
 				//var text = $(this).text();
 				//var url = $(this).attr("href");
@@ -138,6 +175,17 @@
 					} */
 				});
 			}
+		}
+		function trees(treeId, controller, data) {
+			$('#' + treeId).tree({
+    			data: data,
+                lines: true,
+                onClick: function(node) {
+                    if (node.attributes) {
+                    	openTab(node.text, '${ctx}/manager/' + controller + '/list?id=' + node.id, true);
+                    }
+                }
+            });
 		}
 		</script>
 		<sitemesh:write property="jscript" />
