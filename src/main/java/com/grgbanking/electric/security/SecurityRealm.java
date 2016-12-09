@@ -41,10 +41,11 @@ public class SecurityRealm extends AuthorizingRealm {
 
 	private static final Logger LOGGER = LoggerFactory
 			.getLogger(SecurityRealm.class);
-	
+	public static final String CURRENT_USER = "currentUser";
+
 	@Autowired
 	private IUserService userService;
-	
+
 	@Autowired
 	private IPermissionService permissionService;
 
@@ -54,24 +55,32 @@ public class SecurityRealm extends AuthorizingRealm {
 	@Override
 	protected AuthorizationInfo doGetAuthorizationInfo(
 			PrincipalCollection principal) {
-		SimpleAuthorizationInfo simpleAuthorInfo = null;
-		User user = (User) super
-				.getAvailablePrincipal(principal);
-		//List<String> roleList = new ArrayList<String>();
+		SimpleAuthorizationInfo simpleAuthorInfo = new SimpleAuthorizationInfo();
+		User user = (User) super.getAvailablePrincipal(principal);
+		// List<String> roleList = new ArrayList<String>();
 		List<String> permissionList = new ArrayList<String>();
-		
+
 		if (null != user) {
+			List<Permission> permissions = null;
 			PermissionQueryParam param = new PermissionQueryParam();
-			param.setUserId(user.getId());
-			List<Permission> permissions = permissionService.queryPermissions(param);
+			if ("1".equals(user.getAdmin())) {
+				//管理员
+				permissions = permissionService.queryAll(param);
+			} else {
+				//非管理员
+				param.setUserId(user.getId());
+				permissions = permissionService
+						.queryPermissions(param);
+			}
+			
 			if (!CollectionUtils.isEmpty(permissions)) {
 				for (Permission permission : permissions) {
-					if (!StringUtils.isEmpty(permission.getCode()) && !StringUtils.isEmpty(permission.getUrl())) {
+					if (!StringUtils.isEmpty(permission.getCode())
+							&& !StringUtils.isEmpty(permission.getUrl())) {
 						permissionList.add(permission.getCode());
 					}
 				}
-				simpleAuthorInfo = new SimpleAuthorizationInfo();
-				//simpleAuthorInfo.addRoles(roleList);
+				// simpleAuthorInfo.addRoles(roleList);
 				simpleAuthorInfo.addStringPermissions(permissionList);
 			}
 		}
@@ -94,9 +103,9 @@ public class SecurityRealm extends AuthorizingRealm {
 		if (null != user) {
 			String password = String.valueOf(token.getPassword());
 			if (user.getPassword().equals(password)) {
-				authcInfo = new SimpleAuthenticationInfo(user, user.getPassword(),
-						token.getUsername());
-				this.setSession("currentUser", user);
+				authcInfo = new SimpleAuthenticationInfo(user,
+						user.getPassword(), token.getUsername());
+				this.setSession(CURRENT_USER, user);
 			}
 		}
 		return authcInfo;
@@ -104,6 +113,7 @@ public class SecurityRealm extends AuthorizingRealm {
 
 	/**
 	 * 设置session
+	 * 
 	 * @param key
 	 * @param value
 	 */

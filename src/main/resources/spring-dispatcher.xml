@@ -106,6 +106,10 @@
 			<mvc:mapping path="/**" />
 			<bean class="com.grgbanking.electric.interceptor.LoggerHandlerInterceptor" init-method="init" />
 		</mvc:interceptor>
+		<mvc:interceptor>
+			<mvc:mapping path="/manager/timeliness/list" />
+			<bean class="com.grgbanking.electric.interceptor.TerminalHandlerInterceptor" init-method="init" />
+		</mvc:interceptor>
 	</mvc:interceptors>
     
     <!-- 

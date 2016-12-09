@@ -6,16 +6,22 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
+/**
+ * æ—¥å¿—æ‹¦æˆªå™¨
+ * 
+ * @author hsheng1
+ * 
+ */
 public class LoggerHandlerInterceptor implements HandlerInterceptor {
 
 	/**
-	 * ÈİÆ÷Æô¶¯Ê±³õÊ¼»¯
+	 * å®¹å™¨å¯åŠ¨æ—¶åˆå§‹åŒ–
 	 */
 	public void init() {
 	}
 	
 	/**
-	 * ½øÈëController·½·¨Ç°Ö´ĞĞ
+	 * è¿›å…¥Controlleræ–¹æ³•å‰æ‰§è¡Œ
 	 */
 	@Override
 	public boolean preHandle(HttpServletRequest request,
@@ -24,7 +30,7 @@ public class LoggerHandlerInterceptor implements HandlerInterceptor {
 	}
 
 	/**
-	 * ½øÈëController·½·¨ºó£¬·µ»ØModelAndViewÇ°Ö´ĞĞ
+	 * è¿›å…¥Controlleræ–¹æ³•åï¼Œè¿”å›ModelAndViewå‰æ‰§è¡Œ
 	 */
 	@Override
 	public void postHandle(HttpServletRequest request,
@@ -34,7 +40,7 @@ public class LoggerHandlerInterceptor implements HandlerInterceptor {
 	}
 
 	/**
-	 * Ö´ĞĞÍêController·½·¨ºóÖ´ĞĞ
+	 * æ‰§è¡Œå®ŒControlleræ–¹æ³•åæ‰§è¡Œ
 	 */
 	@Override
 	public void afterCompletion(HttpServletRequest request,

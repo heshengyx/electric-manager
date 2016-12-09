@@ -60,26 +60,22 @@
                 <div title="实时数据" data-options="iconCls:'icon-report',selected:true">
                     <ul class="easyui-tree trees"></ul>
                 </div>
-			    <div title="组织机构" data-options="iconCls:'icon-chart_organisation'">
-			        <ul>
-			        	<li><div><a href="javascript:void(0);" onclick="openTab('机构管理', '${ctx}/manager/organization/list', true)"><span class="icon icon-add"></span>机构管理</a></div></li>
-			        	<li><div><a href="javascript:void(0);" onclick="openTab('终端关联', '${ctx}/manager/associate/list', true)"><span class="icon icon-add"></span>终端关联</a></div></li>
-			        </ul>
-			        <!-- <ul class="easyui-tree" id="trees"></ul> -->
-			    </div>
 			    <div title="终端管理" data-options="iconCls:'icon-computer'">
 					<ul>
-                        <li><div><a href="javascript:void(0);" onclick="openTab('终端列表', '${ctx}/manager/terminal/list', true)"><span class="icon icon-add"></span>终端列表</a></div></li>
-                        <li><div><a href="javascript:void(0);" onclick="openTab('终端类别', '${ctx}/manager/style/list', true)"><span class="icon icon-add"></span>终端类别</a></div></li>
+                        <li><div><a class="easyui-linkbutton" href="javascript:void(0);" onclick="openTab('终端列表', '${ctx}/manager/terminal/list', true)" data-options="iconCls:'icon-computer',plain:true">终端列表</a></div></li>
+                        <li><div><a class="easyui-linkbutton" href="javascript:void(0);" onclick="openTab('终端类别', '${ctx}/manager/style/list', true)" data-options="iconCls:'icon-table',plain:true">终端类别</a></div></li>
+                        <li><div><a class="easyui-linkbutton" href="javascript:void(0);" onclick="openTab('终端关联', '${ctx}/manager/associate/list', true)" data-options="iconCls:'icon-table_link',plain:true">终端关联</a></div></li>
                     </ul>
 			    </div>
-			    <div title="用户管理" data-options="iconCls:'icon-user'">
-                    <ul>
-                        <li><div><a href="javascript:void(0);" onclick="openTab('权限管理', '${ctx}/manager/permission/list', true)"><span class="icon icon-add"></span>权限管理</a></div></li>
-                        <li><div><a href="javascript:void(0);" onclick="openTab('角色管理', '${ctx}/manager/role/list', true)"><span class="icon icon-add"></span>角色管理</a></div></li>
-                        <li><div><a href="javascript:void(0);" onclick="openTab('用户管理', '${ctx}/manager/user/list', true)"><span class="icon icon-add"></span>用户管理</a></div></li>
-                    </ul>
-                </div>
+			    <div title="组织机构" data-options="iconCls:'icon-chart_organisation'">
+			        <ul>
+			        	<li><div><a class="easyui-linkbutton" href="javascript:void(0);" onclick="openTab('机构管理', '${ctx}/manager/organization/list', true)" data-options="iconCls:'icon-chart_organisation',plain:true">机构管理</a></div></li>
+			        	<li><div><a class="easyui-linkbutton" href="javascript:void(0);" onclick="openTab('雇员管理', '${ctx}/manager/employee/list', true)" data-options="iconCls:'icon-user_suit',plain:true">雇员管理</a></div></li>
+			        	<li><div><a class="easyui-linkbutton" href="javascript:void(0);" onclick="openTab('权限管理', '${ctx}/manager/permission/list', true)" data-options="iconCls:'icon-key',plain:true">权限管理</a></div></li>
+                        <li><div><a class="easyui-linkbutton" href="javascript:void(0);" onclick="openTab('角色管理', '${ctx}/manager/role/list', true)" data-options="iconCls:'icon-lock_key',plain:true">角色管理</a></div></li>
+                        <li><div><a class="easyui-linkbutton" href="javascript:void(0);" onclick="openTab('用户管理', '${ctx}/manager/user/list', true)" data-options="iconCls:'icon-user_gray_cool',plain:true">用户管理</a></div></li>
+			        </ul>
+			    </div>
                 <div title="系统管理" data-options="iconCls:'icon-wrench'">
                     content3
                 </div>

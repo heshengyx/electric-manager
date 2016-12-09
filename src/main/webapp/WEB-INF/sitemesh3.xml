@@ -3,6 +3,7 @@
 	<!-- 对不同的路径，启用不同的装饰器 -->
 	<mapping path="/manager" decorator="/WEB-INF/layout/managerLayout.jsp"/>
 	<mapping path="/manager/organization/list" decorator="/WEB-INF/layout/tabLayout.jsp"/>
+	<mapping path="/manager/employee/list" decorator="/WEB-INF/layout/tabLayout.jsp"/>
     <mapping path="/manager/terminal/list" decorator="/WEB-INF/layout/tabLayout.jsp"/>
     <mapping path="/manager/style/list" decorator="/WEB-INF/layout/tabLayout.jsp"/>
     <mapping path="/manager/timeliness/list" decorator="/WEB-INF/layout/tabLayout.jsp"/>

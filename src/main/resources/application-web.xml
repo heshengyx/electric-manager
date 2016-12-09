@@ -8,7 +8,7 @@
 	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
 	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 	
-	<context:component-scan base-package="com.grgbanking.electric.security" />
+	<context:component-scan base-package="com.grgbanking.electric.security,com.grgbanking.electric.interceptor" />
 	
 	<bean id="userService" class="org.springframework.remoting.caucho.HessianProxyFactoryBean">
 		<property name="serviceUrl">  
@@ -129,6 +129,14 @@
         </property>
         <property name="serviceInterface">
             <value>com.grgbanking.electric.service.IUserRoleService</value>
+        </property>
+    </bean>
+    <bean id="employeeService" class="org.springframework.remoting.caucho.HessianProxyFactoryBean">
+        <property name="serviceUrl">
+            <value>http://127.0.0.1:8190/hessian/employeeService</value>
+        </property>
+        <property name="serviceInterface">
+            <value>com.grgbanking.electric.service.IEmployeeService</value>
         </property>
     </bean>
     <!-- application-web-conf -->
