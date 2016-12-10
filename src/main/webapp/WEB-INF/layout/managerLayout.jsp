@@ -56,27 +56,27 @@
             <div class="footer">Copyright @ 2016 广电运通 www.grgbanking.com</div>
         </div>
         <div data-options="region:'west',split:true,iconCls:'icon-application_side_tree'" title="导航菜单" style="width:20%;min-width:180px;">
-            <div class="easyui-accordion" style="border:0;height:100%;" id="menuTree">
+            <div class="easyui-accordion" style="border:0;height:100%;">
                 <div title="实时数据" data-options="iconCls:'icon-report',selected:true">
-                    <ul class="easyui-tree" id="tree1"></ul>
+                    <ul class="easyui-tree" id="timelinessTree"></ul>
                 </div>
                 <div title="采集任务" data-options="iconCls:'icon-report_disk',selected:true">
-                    <ul class="easyui-tree" id="tree2"></ul>
+                    <ul class="easyui-tree" id="sampleJobTree"></ul>
                 </div>
                 <div title="监测点维护" data-options="iconCls:'icon-report_edit',selected:true">
-                    <ul class="easyui-tree trees"></ul>
+                    <ul class="easyui-tree" id="monitorTree"></ul>
                 </div>
                 <div title="采集器维护" data-options="iconCls:'icon-report_edit',selected:true">
-                    <ul class="easyui-tree trees"></ul>
+                    <ul class="easyui-tree" id="collectorTree"></ul>
                 </div>
                 <div title="升级管理" data-options="iconCls:'icon-report_go',selected:true">
-                    <ul class="easyui-tree trees"></ul>
+                    <ul class="easyui-tree" id="upgradedTree"></ul>
                 </div>
                 <div title="流量管理" data-options="iconCls:'icon-report_picture',selected:true">
-                    <ul class="easyui-tree trees"></ul>
+                    <ul class="easyui-tree"></ul>
                 </div>
                 <div title="通道监测" data-options="iconCls:'icon-report_magnify',selected:true">
-                    <ul class="easyui-tree trees"></ul>
+                    <ul class="easyui-tree"></ul>
                 </div>
 			    <div title="终端管理" data-options="iconCls:'icon-computer'">
 					<ul>
@@ -97,6 +97,17 @@
                 <div title="系统管理" data-options="iconCls:'icon-wrench'">
                     content3
                 </div>
+			</div>
+			
+			<div id="menuTool" class="easyui-menu" style="width:150px;">
+				<div id="menuTabclose">关闭</div>
+				<div id="menuTabcloseAll">全部关闭</div>
+				<div id="menuTabcloseOther">除此之外全部关闭</div>
+				<div class="menu-sep"></div>
+				<div id="menuTabcloseRight">当前页右侧全部关闭</div>
+				<div id="menuTabcloseLeft">当前页左侧全部关闭</div>
+				<div class="menu-sep"></div>
+				<div id="menuExit">退出</div>
 			</div>
         </div>
 		<!-- content -->
@@ -125,17 +136,11 @@
 	        var params = {};
 	        $.post(url, params, function(result) {
 	        	try {
-	        		/* $('.trees').tree({
-	        			data: result,
-	                    lines: true,
-	                    onClick: function(node) {
-	                        if (node.attributes) {
-	                        	openTab(node.text, '${ctx}/manager/timeliness/list?id=' + node.id, true);
-	                        }
-	                    }
-	                }); */
-	        		trees('tree1', 'timeliness', result);
-	        		trees('tree2', 'timeliness', result);
+	        		trees('timelinessTree', 'timeliness', result, '实时数据');
+	        		trees('sampleJobTree', 'sampleJob', result, '采集任务');
+	        		trees('monitorTree', 'monitor', result, '监测点维护');
+	        		trees('collectorTree', 'collector', result, '采集器维护');
+	        		trees('upgradedTree', 'upgraded', result, '升级管理');
 	        	} catch(e){}
 	        }, 'json');
 	        
@@ -149,9 +154,6 @@
                 }
             }); */
 			$('.easyui-accordion li a').click(function() {
-				//var text = $(this).text();
-				//var url = $(this).attr("href");
-				//openTab(text, url, true);
 				$('.easyui-accordion li div').removeClass("selected");
 				$(this).parent().addClass("selected");
 			}).hover(function() {
@@ -159,12 +161,13 @@
 			}, function() {
 				$(this).parent().removeClass("hover");
 			});
+			tabCloseEven();
 		});
 		function openTab(title, url, flag){
-			if ($('#tab').tabs('exists', title)){
-				$('#tab').tabs('select', title);
+			if ($('#tabs').tabs('exists', title)){
+				$('#tabs').tabs('select', title);
 			} else {
-				$('#tab').tabs('add',{
+				$('#tabs').tabs('add',{
 					title: title,
 					//href: url,
 					closable: flag,
@@ -175,17 +178,87 @@
 					} */
 				});
 			}
+			tabClose();
 		}
-		function trees(treeId, controller, data) {
+		function trees(treeId, controller, data, title) {
 			$('#' + treeId).tree({
     			data: data,
                 lines: true,
                 onClick: function(node) {
-                    if (node.attributes) {
-                    	openTab(node.text, '${ctx}/manager/' + controller + '/list?id=' + node.id, true);
+                    if (node.attributes && node.attributes.isTerminal) {
+                    	openTab(title + '-' + node.text, '${ctx}/manager/' + controller + '/list?id=' + node.id, true);
                     }
                 }
             });
+		}
+		function tabClose() {
+			/*双击关闭TAB选项卡*/
+			$(".tabs-inner").dblclick(function() {
+				var subtitle = $(this).children("span").text();
+				$('#tabs').tabs('close', subtitle);
+			})
+
+			$(".tabs-inner").bind('contextmenu', function(e) {
+				$('#menuTool').menu('show', {
+					left: e.pageX,
+					top: e.pageY,
+				});
+				var subtitle =$(this).children("span").text();
+				$('#menuTool').data("currtab", subtitle);
+				return false;
+			});
+		}
+		//绑定右键菜单事件
+		function tabCloseEven() {
+			//关闭当前
+			$('#menuTabclose').click(function() {
+				var currtab_title = $('#menuTool').data("currtab");
+				$('#tabs').tabs('close', currtab_title);
+			})
+			//全部关闭
+			$('#menuTabcloseAll').click(function() {
+				$('.tabs-inner span').each(function(i, n) {
+					var t = $(n).text();
+					$('#tabs').tabs('close', t);
+				});	
+			});
+			//关闭除当前之外的TAB
+			$('#menuTabcloseOther').click(function() {
+				var currtab_title = $('#menuTool').data("currtab");
+				$('.tabs-inner span').each(function(i, n) {
+					var t = $(n).text();
+					if(t != currtab_title)
+						$('#tabs').tabs('close', t);
+				});	
+			});
+			//关闭当前右侧的TAB
+			$('#menuTabcloseRight').click(function() {
+				var nextall = $('.tabs-selected').nextAll();
+				if(nextall.length == 0){
+					return false;
+				}
+				nextall.each(function(i, n) {
+					var t=$('a:eq(0) span',$(n)).text();
+					$('#tabs').tabs('close', t);
+				});
+				return false;
+			});
+			//关闭当前左侧的TAB
+			$('#menuTabcloseLeft').click(function() {
+				var prevall = $('.tabs-selected').prevAll();
+				if(prevall.length == 0){
+					return false;
+				}
+				prevall.each(function(i, n) {
+					var t=$('a:eq(0) span',$(n)).text();
+					$('#tabs').tabs('close', t);
+				});
+				return false;
+			});
+			//退出
+			$("#menuExit").click(function() {
+				$('#menuTool').menu('hide');
+			})
 		}
 		</script>
 		<sitemesh:write property="jscript" />

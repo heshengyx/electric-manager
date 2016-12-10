@@ -65,13 +65,57 @@ public class OperationContoller extends BaseController {
 		return data;
 	}
 	
+	/**
+	 * 关联终端
+	 * @return
+	 */
+	@RequestMapping("/associate/list")
+	public String associate() {
+		return "associateList";
+	}
+	
+	/**
+	 * 实时数据查询
+	 * @return
+	 */
 	@RequestMapping("/timeliness/list")
 	public String timeliness() {
 		return "timelinessList";
 	}
 	
-	@RequestMapping("/associate/list")
-	public String associate() {
-		return "associateList";
+	/**
+	 * 采集任务配置
+	 * @return
+	 */
+	@RequestMapping("/sampleJob/list")
+	public String sampleJob() {
+		return "sampleJobList";
+	}
+	
+	/**
+	 * 监测点参数实时维护
+	 * @return
+	 */
+	@RequestMapping("/monitor/list")
+	public String monitor() {
+		return "monitorList";
+	}
+	
+	/**
+	 * 集中采集器参数实时维护
+	 * @return
+	 */
+	@RequestMapping("/collector/list")
+	public String collector() {
+		return "collectorList";
+	}
+	
+	/**
+	 * 终端软件升级管理
+	 * @return
+	 */
+	@RequestMapping("/upgraded/list")
+	public String upgraded() {
+		return "upgradedList";
 	}
 }

@@ -8,7 +8,7 @@
 	
 	<body>
 		<div data-options="region:'center'" style="background: #E0ECFF;">
-			<div id="tab" class="easyui-tabs" data-options="fit:true,border:false,plain:true">
+			<div id="tabs" class="easyui-tabs" data-options="fit:true,border:false,plain:true">
 				<div title="首页" href="welcome.jsp" class="content-doc"></div>
 			</div>
 		</div>
