@@ -157,7 +157,7 @@
 					if (result.status) {
 						$.messager.alert('消息', '保存成功', 'info', function(r) {
 							$('#editWin').window('close');
-							//trees();
+							$('#parentIdEdit').combotree('reload');
 							$('#treegrid').treegrid('reload');
 							$('#editForm').form('reset');
 						});

@@ -169,7 +169,20 @@
 	                {field: 'name', title: '终端名称'},
 					{field: 'code', title: '终端编号', width: 300},
 					{field: 'styleName', title: '终端类别'},
-					{field: 'orgName', title: '所属公司'},
+					{field: 'orgName', title: '所属机构'},
+					{field: 'status', title: '是否在线', formatter:function(val, row, idx) {
+						var content = '';
+						if (val === '1') {
+							content = '在线';
+						} else {
+							content = '断线';
+						}
+	                    return content;
+	                }},
+	                {field: 'ipaddr', title: 'ip地址'},
+	                {field: 'heartbeat', title: '心跳时间', formatter:function(val, row, idx) {
+	                    return to_date_hms(val);
+	                }},
 	                {field: 'createTime', title: '创建时间', formatter:function(val, row, idx) {
 	                    return to_date_hms(val);
 	                }},

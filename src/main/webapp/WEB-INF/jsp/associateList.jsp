@@ -3,13 +3,13 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>关联终端-数据收集平台</title>
+        <title>终端关联-数据收集平台</title>
     </head>
 
 	<body>
     	<div data-options="region:'west',iconCls:'icon-application_side_tree'" title="组织终端" style="width:20%;min-width:180px;">
-            <div class="easyui-accordion" style="border:0;height:100%;" id="menuTree">
-			    <ul class="easyui-tree" id="trees"></ul>
+            <div class="easyui-accordion" style="border:0;height:100%;padding-top:10px;">
+			    <ul class="easyui-tree" id="trees" style="margin-left:20px;"></ul>
 			</div>
         </div>
         <div data-options="region:'center',border:false">
