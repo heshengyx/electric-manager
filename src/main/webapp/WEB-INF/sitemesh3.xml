@@ -15,6 +15,7 @@
     <mapping path="/manager/monitor/list" decorator="/WEB-INF/layout/tabLayout.jsp"/>
     <mapping path="/manager/collector/list" decorator="/WEB-INF/layout/tabLayout.jsp"/>
     <mapping path="/manager/upgraded/list" decorator="/WEB-INF/layout/tabLayout.jsp"/>
+    <mapping path="/manager/recognitionLog/list" decorator="/WEB-INF/layout/tabLayout.jsp"/>
     <!-- sitemesh-conf -->
 	
 	<!-- 排除，不进行装饰的路径 -->
