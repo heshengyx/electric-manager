@@ -70,18 +70,53 @@
                 ]],
 	            columns: [[
 					{title: '识别指静脉', colspan: 3},
-					{title: '识别密码', colspan: 3}
+					{title: '识别密码', colspan: 3},
+					{title: '识别指静脉%', colspan: 2},
+					{title: '识别密码%', colspan: 2}
 				],[
-	                {field: 'recSuccTotal', title: '成功'},
-	                {field: 'recFailTotal', title: '失败'},
-	                {field: 'recTotal', title: '合计', formatter:function(val, row, idx) {
+	                {field: 'recSuccTotal', title: '成功', width: 50},
+	                {field: 'recFailTotal', title: '失败', width: 50},
+	                {field: 'recTotal', title: '合计', width: 50, formatter:function(val, row, idx) {
 	                    return row.recSuccTotal + row.recFailTotal;
 	                }},
-	                {field: 'pwdSuccTotal', title: '成功'},
-	                {field: 'pwdFailTotal', title: '失败'},
-	                {field: 'pwdTotal', title: '合计', formatter:function(val, row, idx) {
+	                {field: 'pwdSuccTotal', title: '成功', width: 50},
+	                {field: 'pwdFailTotal', title: '失败', width: 50},
+	                {field: 'pwdTotal', title: '合计', width: 50, formatter:function(val, row, idx) {
 	                    return row.pwdSuccTotal + row.pwdFailTotal;
-	                }}
+	                }},
+	                {field: 'recSucc', title: '成功', width: 50, formatter:function(val, row, idx) {
+	                	var content = '0%';
+	                	var total = row.recSuccTotal + row.recFailTotal;
+	                	if (total) {
+	                		content = row.recSuccTotal / total * 100 + '%';
+	                	}
+                        return content;
+                    }},
+                    {field: 'recFail', title: '失败', width: 50, formatter:function(val, row, idx) {
+                    	var content = '0%';
+                        var total = row.recSuccTotal + row.recFailTotal;
+                        if (total) {
+                        	content = row.recFailTotal / total * 100 + '%';
+                            
+                        }
+                        return content;
+                    }},
+                    {field: 'pwdSucc', title: '成功', width: 50, formatter:function(val, row, idx) {
+                    	var content = '0%';
+                        var total = row.pwdSuccTotal + row.pwdFailTotal;
+                        if (total) {
+                        	content = row.pwdSuccTotal / total * 100 + '%';
+                        }
+                        return content;
+                    }},
+                    {field: 'pwdFail', title: '失败', width: 50, formatter:function(val, row, idx) {
+                    	var content = '0%';
+                        var total = row.pwdSuccTotal + row.pwdFailTotal;
+                        if (total) {
+                            content = row.pwdFailTotal / total * 100 + '%';
+                        }
+                        return content;
+                    }}
 	            ]],
 	            onLoadSuccess: function(index, field, value) {
 	            	reports();
