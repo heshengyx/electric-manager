@@ -97,7 +97,7 @@
                 <div title="系统管理" data-options="iconCls:'icon-wrench'">
                     <ul>
                         <li><div><a class="easyui-linkbutton" href="javascript:void(0);" onclick="openTab('识别日志', '${ctx}/manager/recognitionLog/list', true)" data-options="iconCls:'icon-table_edit',plain:true">识别日志</a></div></li>
-                        <li><div><a class="easyui-linkbutton" href="javascript:void(0);" onclick="openTab('识别报表', '${ctx}/manager/recognitionLog/list', true)" data-options="iconCls:'icon-table_edit',plain:true">识别报表</a></div></li>
+                        <li><div><a class="easyui-linkbutton" href="javascript:void(0);" onclick="openTab('识别报表', '${ctx}/manager/report/list', true)" data-options="iconCls:'icon-table_edit',plain:true">识别报表</a></div></li>
                     </ul>
                 </div>
 			</div>

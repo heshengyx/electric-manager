@@ -57,11 +57,6 @@ public class RecognitionLogController extends BaseController {
         return recognitionLogService.queryIpaddr();
     }
     
-    @RequestMapping("/report")
-    @ResponseBody
-    public Object report(RecognitionLogQueryParam param) {
-        return recognitionLogService.queryReport(param);
-    }
     
     @RequestMapping("/saveOrUpdate")
     @ResponseBody
@@ -88,10 +83,8 @@ public class RecognitionLogController extends BaseController {
     @RequestMapping("/saveBatch")
     @ResponseBody
     public Object saveBatch(RecognitionLogData data) {
-        User user = getCurrentUser();
         JSONMessage jMessage = new JSONMessage();
         try {
-            data.setCreateBy(user.getAccount());
             recognitionLogService.saveBatchData(data);
             jMessage.setStatus(Boolean.TRUE);
         } catch (Exception e) {
