@@ -2,76 +2,85 @@
 <%@ include file="/common/include.jsp"%>
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>登录-数据收集平台</title>
-		<link rel="stylesheet" type="text/css" href="${ctx}/themes/default/easyui.css" />
-	</head>
-	
-	<body>
-		<div id="loginWin" class="easyui-window" title="登录" style="width:350px;height:188px;padding:5px;"
-   			minimizable="false" maximizable="false" resizable="false" collapsible="false">
-	    	<div class="easyui-layout" fit="true">
-	            <div region="center" border="false" style="padding:5px;background:#fff;border:1px solid #ccc;">
-			        <form id="loginForm" method="post" action="${ctx}/manager/login">
-			            <div style="padding:5px 0;">
-			                <label for="account">帐号:</label>
-			                <input type="text" name="account" id="account" style="width:260px;"></input>
-			            </div>
-			            <div style="padding:5px 0;">
-			                <label for="password">密码:</label>
-			                <input type="password" name="password" id="password" style="width:260px;"></input>
-			            </div>
-			             <div style="padding:5px 0;text-align: center;color: red;" id="showMsg"></div>
-			        </form>
-	            </div>
-	            <div region="south" border="false" style="text-align:right;padding:5px 0;">
-	                <a class="easyui-linkbutton" iconCls="icon-ok" href="javascript:void(0)" id="loginBtn">登录</a>
-	                <a class="easyui-linkbutton" iconCls="icon-cancel" href="javascript:void(0)" id="resetBtn">重置</a>
-	            </div>
-			</div>
-		</div>
-	</body>
-	<!-- js -->
-	<script type="text/javascript" src="${ctx}/js/jquery.min.js"></script>
-	<script type="text/javascript" src="${ctx}/js/jquery.easyui.min.js"></script>
-	<script type="text/javascript">
-	$(function() {
-		document.onkeydown = function(e){
-		    var event = e || window.event;  
-		    var code = event.keyCode || event.which || event.charCode;
-		    if (code == 13) {
-		        login();
-		    }
-		}
-	    $('#account').focus();
-	    $('#loginBtn').click(function() {
-	    	login();
+    <head>
+        <title>登录-数据收集平台</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <link rel="stylesheet" type="text/css" href="${ctx}/css/login.css" />
+    </head>
+    <body>
+        <div class="wrapper">
+            <br/><br/>
+            <h1 style="text-align:center">数据收集平台</h1>
+            <br/><br/>
+            <div class="content">
+                <div id="form_wrapper" class="form_wrapper">
+                    <form class="login active" id="loginForm" method="post" action="${ctx}/manager/login">
+                        <h3>用户登录</h3>
+                        <div>
+                            <label>账号:</label>
+                            <input type="text" name="account" id="account" />
+                            <!-- <span class="error">This is an error</span> -->
+                        </div>
+                        <div>
+                            <label>密码: </label>
+                            <input type="password" name="password" id="password" />
+                            <span class="error" id="showMsg"></span>
+                        </div>
+                        <div class="bottom">
+                            <div class="remember"><input type="checkbox" /><span>记住我</span></div>
+                            <input type="button" value="登录" id="loginBtn"></input>
+                            <div class="clear"></div>
+                        </div>
+                    </form>
+                </div>
+                <div class="clear"></div>
+            </div>
+        </div>
+        
+        <!-- The JavaScript -->
+        <script type="text/javascript" src="${ctx}/js/jquery.min.js"></script>
+        <script type="text/javascript" src="${ctx}/js/jquery.easyui.min.js"></script>
+        <script type="text/javascript">
+	    $(function() {
+	        document.onkeydown = function(e){
+	            var event = e || window.event;  
+	            var code = event.keyCode || event.which || event.charCode;
+	            if (code == 13) {
+	                login();
+	            }
+	        }
+	        $('#account').focus();
+	        $('#loginBtn').click(function() {
+	            login();
+	        });
+	        /* $('#resetBtn').click(function() {
+	            $('#loginForm').form('clear');
+	        }); */
 	    });
-	    $('#resetBtn').click(function() {
-	    	$('#loginForm').form('clear');
-	    });
-	});
-	function login() {
-		if($('#account').val() == "" || $('#password').val() == ""){
-            $('#showMsg').html("用户名或密码为空，请输入");
-            $('#account').focus();
-        } else {
-        	var $form = $('#loginForm');
-        	$.post($form.attr('action'), $form.serialize(), function(result) {
-		    	if (result.status) {
-		    	  	window.location.href = '${ctx}/manager';
-		      	} else {
-		      		$.messager.alert({
-						title: '消息',
-						ok: '确定',
-						msg: result.message
-					});
-		      	}
-		    }, 'json');
-        }
-	}
-	</script>
-	<!-- js -->
+	    function login() {
+	    	$('#showMsg').html("");
+	    	if($('#account').val() == "") {
+	    		$('#account').focus();
+	    	} else if($('#password').val() == "") {
+	            $('#password').focus();
+	        } else {
+	            var $form = $('#loginForm');
+	            $.post($form.attr('action'), $form.serialize(), function(result) {
+	                if (result.status) {
+	                    window.location.href = '${ctx}/manager';
+	                } else {
+	                    /* $.messager.alert({
+	                        title: '消息',
+	                        ok: '确定',
+	                        msg: result.message
+	                    }); */
+	                    $('#account').focus();
+	                	$('#showMsg').html("账号或密码错误");
+	                }
+	            }, 'json');
+	        }
+	    }
+	    </script>
+	    <!-- js -->
+    </body>
 </html>

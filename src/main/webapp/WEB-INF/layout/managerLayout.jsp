@@ -57,49 +57,89 @@
         </div>
         <div data-options="region:'west',split:true,iconCls:'icon-application_side_tree'" title="导航菜单" style="width:20%;min-width:180px;">
             <div class="easyui-accordion" style="border:0;height:100%;">
+                <shiro:hasPermission name="manager:timeliness">
                 <div title="实时数据" data-options="iconCls:'icon-report',selected:true">
                     <ul class="easyui-tree" id="timelinessTree"></ul>
                 </div>
+                </shiro:hasPermission>
+                <shiro:hasPermission name="manager:sampleJob">
                 <div title="采集任务" data-options="iconCls:'icon-report_disk',selected:true">
                     <ul class="easyui-tree" id="sampleJobTree"></ul>
                 </div>
+                </shiro:hasPermission>
+                <shiro:hasPermission name="manager:monitor">
                 <div title="监测点维护" data-options="iconCls:'icon-report_edit',selected:true">
                     <ul class="easyui-tree" id="monitorTree"></ul>
                 </div>
+                </shiro:hasPermission>
+                <shiro:hasPermission name="manager:collector">
                 <div title="采集器维护" data-options="iconCls:'icon-report_edit',selected:true">
                     <ul class="easyui-tree" id="collectorTree"></ul>
                 </div>
+                </shiro:hasPermission>
+                <shiro:hasPermission name="manager:upgraded">
                 <div title="升级管理" data-options="iconCls:'icon-report_go',selected:true">
                     <ul class="easyui-tree" id="upgradedTree"></ul>
                 </div>
+                </shiro:hasPermission>
+                <shiro:hasPermission name="manager:flow">
                 <div title="流量管理" data-options="iconCls:'icon-report_picture',selected:true">
                     <ul class="easyui-tree"></ul>
                 </div>
+                </shiro:hasPermission>
+                <shiro:hasPermission name="manager:channel">
                 <div title="通道监测" data-options="iconCls:'icon-report_magnify',selected:true">
                     <ul class="easyui-tree"></ul>
                 </div>
+                </shiro:hasPermission>
+                <shiro:hasPermission name="manager:terminal">
 			    <div title="终端管理" data-options="iconCls:'icon-computer'">
 					<ul>
+					    <shiro:hasPermission name="manager:terminal:list">
                         <li><div><a class="easyui-linkbutton" href="javascript:void(0);" onclick="openTab('终端列表', '${ctx}/manager/terminal/list', true)" data-options="iconCls:'icon-computer',plain:true">终端列表</a></div></li>
+                        </shiro:hasPermission>
+                        <shiro:hasPermission name="manager:style:list">
                         <li><div><a class="easyui-linkbutton" href="javascript:void(0);" onclick="openTab('终端类别', '${ctx}/manager/style/list', true)" data-options="iconCls:'icon-table',plain:true">终端类别</a></div></li>
+                        </shiro:hasPermission>
+                        <shiro:hasPermission name="manager:associate:list">
                         <li><div><a class="easyui-linkbutton" href="javascript:void(0);" onclick="openTab('终端关联', '${ctx}/manager/associate/list', true)" data-options="iconCls:'icon-table_link',plain:true">终端关联</a></div></li>
+                        </shiro:hasPermission>
                     </ul>
 			    </div>
+			    </shiro:hasPermission>
+			    <shiro:hasPermission name="manager:organization">
 			    <div title="组织机构" data-options="iconCls:'icon-chart_organisation'">
 			        <ul>
+			            <shiro:hasPermission name="manager:organization:list">
 			        	<li><div><a class="easyui-linkbutton" href="javascript:void(0);" onclick="openTab('机构管理', '${ctx}/manager/organization/list', true)" data-options="iconCls:'icon-chart_organisation',plain:true">机构管理</a></div></li>
+			        	</shiro:hasPermission>
+			        	<shiro:hasPermission name="manager:employee:list">
 			        	<li><div><a class="easyui-linkbutton" href="javascript:void(0);" onclick="openTab('雇员管理', '${ctx}/manager/employee/list', true)" data-options="iconCls:'icon-user_suit',plain:true">雇员管理</a></div></li>
+			        	</shiro:hasPermission>
+			        	<shiro:hasPermission name="manager:permission:list">
 			        	<li><div><a class="easyui-linkbutton" href="javascript:void(0);" onclick="openTab('权限管理', '${ctx}/manager/permission/list', true)" data-options="iconCls:'icon-key',plain:true">权限管理</a></div></li>
+			        	</shiro:hasPermission>
+			        	<shiro:hasPermission name="manager:role:list">
                         <li><div><a class="easyui-linkbutton" href="javascript:void(0);" onclick="openTab('角色管理', '${ctx}/manager/role/list', true)" data-options="iconCls:'icon-lock_key',plain:true">角色管理</a></div></li>
+                        </shiro:hasPermission>
+                        <shiro:hasPermission name="manager:user:list">
                         <li><div><a class="easyui-linkbutton" href="javascript:void(0);" onclick="openTab('用户管理', '${ctx}/manager/user/list', true)" data-options="iconCls:'icon-user_gray_cool',plain:true">用户管理</a></div></li>
+                        </shiro:hasPermission>
 			        </ul>
 			    </div>
+			    </shiro:hasPermission>
+			    <shiro:hasPermission name="manager:system">
                 <div title="系统管理" data-options="iconCls:'icon-wrench'">
                     <ul>
+                        <shiro:hasPermission name="manager:recognitionLog:list">
                         <li><div><a class="easyui-linkbutton" href="javascript:void(0);" onclick="openTab('识别日志', '${ctx}/manager/recognitionLog/list', true)" data-options="iconCls:'icon-table_edit',plain:true">识别日志</a></div></li>
+                        </shiro:hasPermission>
+                        <shiro:hasPermission name="manager:report:list">
                         <li><div><a class="easyui-linkbutton" href="javascript:void(0);" onclick="openTab('识别报表', '${ctx}/manager/report/list', true)" data-options="iconCls:'icon-table_edit',plain:true">识别报表</a></div></li>
+                        </shiro:hasPermission>
                     </ul>
                 </div>
+                </shiro:hasPermission>
 			</div>
 			
 			<div id="menuTool" class="easyui-menu" style="width:150px;">
@@ -139,11 +179,16 @@
 	        var params = {};
 	        $.post(url, params, function(result) {
 	        	try {
-	        		trees('timelinessTree', 'timeliness', result, '实时数据');
-	        		trees('sampleJobTree', 'sampleJob', result, '采集任务');
-	        		trees('monitorTree', 'monitor', result, '监测点维护');
-	        		trees('collectorTree', 'collector', result, '采集器维护');
-	        		trees('upgradedTree', 'upgraded', result, '升级管理');
+	        		<shiro:hasPermission name="manager:timeliness">
+	        		trees('timelinessTree', 'timeliness', result, '实时数据');</shiro:hasPermission>
+	        		<shiro:hasPermission name="manager:sampleJob">
+	        		trees('sampleJobTree', 'sampleJob', result, '采集任务');</shiro:hasPermission>
+	        		<shiro:hasPermission name="manager:monitor">
+	        		trees('monitorTree', 'monitor', result, '监测点维护');</shiro:hasPermission>
+	        		<shiro:hasPermission name="manager:collector">
+	        		trees('collectorTree', 'collector', result, '采集器维护');</shiro:hasPermission>
+	        		<shiro:hasPermission name="manager:upgraded">
+	        		trees('upgradedTree', 'upgraded', result, '升级管理');</shiro:hasPermission>
 	        	} catch(e){}
 	        }, 'json');
 	        
