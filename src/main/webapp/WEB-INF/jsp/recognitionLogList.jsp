@@ -18,7 +18,7 @@
 		            <td class="td-right">ip地址：</td>
                     <td>
                     <select class="easyui-combobox" id="ipaddrQuery" style="width:100px;"></select></td>
-		            <td class="td-right">创建时间：</td>
+		            <td class="td-right">识别时间：</td>
 		            <td>
 		            <input class="easyui-datebox" type="text" id="createDateBeginQuery" style="width:100px;">~
 		            <input class="easyui-datebox" type="text" id="createDateEndQuery" style="width:100px;"></td>
@@ -69,7 +69,13 @@
 	                {field: 'seq', title: '手指序号'},
 	                {field: 'threshold', title: '相识度'},
 	                {field: 'indexed', title: '索引'},
-	                {field: 'status', title: '状态'},
+	                {field: 'status', title: '状态', align: 'center', formatter:function(val, row, idx) {
+	                	var content = '<img src="${ctx}/themes/extensions/bullet_cross.png" width="13">';
+	                	if (val === '1') {
+	                		content = '<img src="${ctx}/themes/extensions/bullet_tick.png" width="13">';
+	                	}
+	                    return content;
+	                }},
 	                {field: 'orgName', title: '部门名称', width: 100},
 	                {field: 'ipaddr', title: 'ip地址'},
 	                {field: 'createTime', title: '创建时间', formatter:function(val, row, idx) {

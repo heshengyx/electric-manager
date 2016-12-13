@@ -149,6 +149,13 @@
 	                {field: 'id', title: '选择', width: 30, checkbox: true},
 	                {field: 'name', title: '用户名称'},
 	                {field: 'code', title: '用户编码'},
+	                {field: 'admin', title: '是否管理员', width: 200, formatter:function(val, row, idx) {
+	                	var content = '否';
+	                	if (val === '1') {
+	                		content = '是';
+	                	}
+	                    return content;
+	                }},
 	                {field: 'createTime', title: '创建时间', formatter:function(val, row, idx) {
 	                    return to_date_hms(val);
 	                }},

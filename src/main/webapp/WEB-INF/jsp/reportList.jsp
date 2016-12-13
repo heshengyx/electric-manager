@@ -27,7 +27,7 @@
 		            <td class="td-right">ip地址：</td>
                     <td>
                     <select class="easyui-combobox" id="ipaddrQuery" style="width:100px;"></select></td>
-		            <td class="td-right">创建时间：</td>
+		            <td class="td-right">识别时间：</td>
 		            <td>
 		            <input class="easyui-datebox" type="text" id="createDateBeginQuery" style="width:100px;">~
 		            <input class="easyui-datebox" type="text" id="createDateEndQuery" style="width:100px;"></td>
@@ -52,7 +52,7 @@
 	    <jscript>
 	    <!-- js -->
 	    <script type="text/javascript" src="${ctx}/plugins/echarts.min.js"></script>
-	    <script type="text/javascript" src="${ctx}/js/mapper.js"></script>
+	    <script type="text/javascript" src="${ctx}/js/format.js"></script>
 	    <script type="text/javascript">
 	    $(function() {
 	        $('#datagrid').datagrid({
@@ -74,46 +74,46 @@
 					{title: '识别指静脉%', colspan: 2},
 					{title: '识别密码%', colspan: 2}
 				],[
-	                {field: 'recSuccTotal', title: '成功', width: 50},
-	                {field: 'recFailTotal', title: '失败', width: 50},
-	                {field: 'recTotal', title: '合计', width: 50, formatter:function(val, row, idx) {
+	                {field: 'recSuccTotal', title: '成功', align: 'right', width: 50},
+	                {field: 'recFailTotal', title: '失败', align: 'right', width: 50},
+	                {field: 'recTotal', title: '合计', align: 'right', width: 50, formatter:function(val, row, idx) {
 	                    return row.recSuccTotal + row.recFailTotal;
 	                }},
-	                {field: 'pwdSuccTotal', title: '成功', width: 50},
-	                {field: 'pwdFailTotal', title: '失败', width: 50},
-	                {field: 'pwdTotal', title: '合计', width: 50, formatter:function(val, row, idx) {
+	                {field: 'pwdSuccTotal', title: '成功', align: 'right', width: 50},
+	                {field: 'pwdFailTotal', title: '失败', align: 'right', width: 50},
+	                {field: 'pwdTotal', title: '合计', align: 'right', width: 50, formatter:function(val, row, idx) {
 	                    return row.pwdSuccTotal + row.pwdFailTotal;
 	                }},
-	                {field: 'recSucc', title: '成功', width: 50, formatter:function(val, row, idx) {
+	                {field: 'recSucc', title: '成功', align: 'right', width: 50, formatter:function(val, row, idx) {
 	                	var content = '0%';
 	                	var total = row.recSuccTotal + row.recFailTotal;
 	                	if (total) {
-	                		content = row.recSuccTotal / total * 100 + '%';
+	                		content = jmoney(row.recSuccTotal / total * 100) * 100 + '%';
 	                	}
                         return content;
                     }},
-                    {field: 'recFail', title: '失败', width: 50, formatter:function(val, row, idx) {
+                    {field: 'recFail', title: '失败', align: 'right', width: 50, formatter:function(val, row, idx) {
                     	var content = '0%';
                         var total = row.recSuccTotal + row.recFailTotal;
                         if (total) {
-                        	content = row.recFailTotal / total * 100 + '%';
+                        	content = jmoney(row.recFailTotal / total * 100) * 100 + '%';
                             
                         }
                         return content;
                     }},
-                    {field: 'pwdSucc', title: '成功', width: 50, formatter:function(val, row, idx) {
+                    {field: 'pwdSucc', title: '成功', align: 'right', width: 50, formatter:function(val, row, idx) {
                     	var content = '0%';
                         var total = row.pwdSuccTotal + row.pwdFailTotal;
                         if (total) {
-                        	content = row.pwdSuccTotal / total * 100 + '%';
+                        	content = jmoney(row.pwdSuccTotal / total * 100) * 100 + '%';
                         }
                         return content;
                     }},
-                    {field: 'pwdFail', title: '失败', width: 50, formatter:function(val, row, idx) {
+                    {field: 'pwdFail', title: '失败', align: 'right', width: 50, formatter:function(val, row, idx) {
                     	var content = '0%';
                         var total = row.pwdSuccTotal + row.pwdFailTotal;
                         if (total) {
-                            content = row.pwdFailTotal / total * 100 + '%';
+                            content = jmoney(row.pwdFailTotal / total * 100) * 100 + '%';
                         }
                         return content;
                     }}
