@@ -170,13 +170,11 @@
 					{field: 'code', title: '终端编号', width: 300},
 					{field: 'styleName', title: '终端类别'},
 					{field: 'orgName', title: '所属机构'},
-					{field: 'status', title: '是否在线', formatter:function(val, row, idx) {
-						var content = '';
-						if (val === '1') {
-							content = '在线';
-						} else {
-							content = '断线';
-						}
+					{field: 'status', title: '状态', align: 'center', formatter:function(val, row, idx) {
+	                	var content = '<img src="${ctx}/themes/extensions/lightbulb_off.png" width="13">';
+	                	if (val === '1') {
+	                		content = '<img src="${ctx}/themes/extensions/lightbulb.png" width="13">';
+	                	}
 	                    return content;
 	                }},
 	                {field: 'ipaddr', title: 'ip地址'},

@@ -239,6 +239,13 @@
 	            }, 'json');
 	        });
 	        
+	        $('#searchAppendBtn').click(function() {
+	        	$('#appendBatchDatagrid').datagrid('load', {
+		    	    name: $('#nameAppendQuery').val(),
+		    	    code: $('#codeAppendQuery').val()
+		    	});
+	        });
+	        
 	        submitForm('${ctx}/manager/terminal/saveOrUpdate');
 	        deleteRow('${ctx}/manager/terminal/deleteByIds');
 			trees();
