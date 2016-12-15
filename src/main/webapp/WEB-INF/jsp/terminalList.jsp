@@ -31,6 +31,7 @@
 		        </tr>
 		    </table>
 		    </form>
+		    <img src="${ctx}/themes/extensions/lightbulb.png" width="13">："在线"，<img src="${ctx}/themes/extensions/lightbulb_off.png" width="13">："断线"
 		    <!-- search -->
 		    <!-- datagrid -->
 		    <div id="tools">
@@ -178,6 +179,7 @@
 	                    return content;
 	                }},
 	                {field: 'ipaddr', title: 'ip地址'},
+	                {field: 'location', title: '备注'},
 	                {field: 'heartbeat', title: '心跳时间', formatter:function(val, row, idx) {
 	                    return to_date_hms(val);
 	                }},

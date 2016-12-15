@@ -1,12 +1,14 @@
 package com.grgbanking.electric.controller;
 
 import java.util.Arrays;
+import java.util.Date;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessResourceFailureException;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -17,6 +19,7 @@ import com.grgbanking.electric.entity.User;
 import com.grgbanking.electric.json.JSONMessage;
 import com.grgbanking.electric.param.RecognitionLogQueryParam;
 import com.grgbanking.electric.service.IRecognitionLogService;
+import com.grgbanking.electric.util.DateUtil;
 
 
 @Controller
@@ -35,7 +38,10 @@ public class RecognitionLogController extends BaseController {
     }
     
     @RequestMapping("/list")
-    public String list() {
+    public String list(ModelMap model) {
+    	Date date = new Date();
+    	model.put("dateBegin", DateUtil.getDay(date));
+    	model.put("dateEnd", DateUtil.getDay(date));
         return "recognitionLogList";
     }
     
@@ -138,4 +144,5 @@ public class RecognitionLogController extends BaseController {
         }
         return jMessage;
     }
+    
 }

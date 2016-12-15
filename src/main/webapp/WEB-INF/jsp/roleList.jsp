@@ -186,14 +186,14 @@
 	        });
 	        
 	        $('#savePermissionBtn').click(function() {
-	        	var nodes = $('#permissionTrees').tree('getChecked');
+	        	var nodes = $('#permissionTrees').tree('getChecked', ['checked','indeterminate']);
 	        	var form = $('#addPermissionBatchForm');
                 form.children().remove();
                 if (nodes) {
                 	for (var i=0; i<nodes.length; i++) {
                         form.append('<input type="hidden" name="permissionId" value="' + nodes[i].id + '">');
                     }
-                	nodes = $('#organizationTrees').tree('getChecked');
+                	nodes = $('#organizationTrees').tree('getChecked', ['checked','indeterminate']);
                 	if (nodes) {
                 		for (var i=0; i<nodes.length; i++) {
                             form.append('<input type="hidden" name="organizationId" value="' + nodes[i].id + '">');
@@ -267,6 +267,7 @@
                 url: url,
                 lines: true,
                 checkbox: true,
+                cascadeCheck: false,
                 onClick: function(node) {
                 }
             });
@@ -280,6 +281,7 @@
                 url: url,
                 lines: true,
                 checkbox: true,
+                cascadeCheck: false,
                 onClick: function(node) {
                 }
             });

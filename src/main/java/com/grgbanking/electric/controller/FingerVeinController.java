@@ -18,7 +18,6 @@ import com.grgbanking.electric.json.JSONMessage;
 import com.grgbanking.electric.param.FingerVeinQueryParam;
 import com.grgbanking.electric.service.IFingerVeinService;
 
-
 @Controller
 @RequestMapping("/manager/fingerVein")
 public class FingerVeinController extends BaseController {

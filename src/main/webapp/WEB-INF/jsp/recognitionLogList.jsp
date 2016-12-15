@@ -20,8 +20,8 @@
                     <select class="easyui-combobox" id="ipaddrQuery" style="width:100px;"></select></td>
 		            <td class="td-right">识别时间：</td>
 		            <td>
-		            <input class="easyui-datebox" type="text" id="createDateBeginQuery" style="width:100px;">~
-		            <input class="easyui-datebox" type="text" id="createDateEndQuery" style="width:100px;"></td>
+		            <input class="easyui-datebox" type="text" id="createDateBeginQuery" value="${dateBegin}" style="width:100px;">~
+		            <input class="easyui-datebox" type="text" id="createDateEndQuery" value="${dateEnd}" style="width:100px;"></td>
 		        </tr>
 		        <tr>
 		            <td></td>
@@ -40,6 +40,7 @@
 		    <table id="datagrid" style="width:100%;"></table>
 		    <!-- datagrid -->
 		    </div>
+		    <div id="win"></div>
 	    </div>
 	    <jscript>
 	    <!-- js -->
@@ -51,6 +52,10 @@
 	            url: '${ctx}/manager/recognitionLog/query',
 	            toolbar: '#tools',
 	            idField: 'id',
+	            queryParams: {
+	            	createDateBegin: $('#createDateBeginQuery').datebox('getValue'),
+	                createDateEnd: $('#createDateEndQuery').datebox('getValue')
+	            },
 	            autoRowHeight: true,
 	            fixed: true,
 	            fitColumns: true,
@@ -80,6 +85,16 @@
 	                {field: 'ipaddr', title: 'ip地址'},
 	                {field: 'createTime', title: '创建时间', formatter:function(val, row, idx) {
 	                    return to_date_hms(val);
+	                }},
+	                {field: 'opt', title: '操作', formatter:function(val, row, idx) {
+	                	var filePath = row.filePath;
+	                	var content = '';
+	                	if (filePath) {
+	                		content += '<div style="text-align:center"><a href="javascript:void(0);" onclick="downloadFile(\'' + row.id + '\');">';
+	                		content += '<img src="${ctx}/themes/extensions/package_down.png" width="13">';
+	                		content += '</a></div>';
+	                	}
+	                    return content;
 	                }}
 	            ]]
 	        });
@@ -110,6 +125,21 @@
                 } catch(e){}
             }, 'json');
         }
+	    function downloadFile(id) {
+	    	if (id) {
+	    		var url = "${ctx}/manager/recognitionLog/exists?random="+ Math.random();
+	            var params = {id: id};
+	            $.post(url, params, function(result) {
+	            	if (result.status) {
+	            		/* $('#win').window({});
+	            		$('#win').window('refresh', '${ctx}/download.jsp');
+	            		$('#win').window('close'); */
+	                } else {
+	                	$.messager.alert('消息', result.message, 'error');
+	                }
+	            }, 'json');
+	    	}
+	    }
 	    </script>
 	    <!-- js -->
 	    </jscript>

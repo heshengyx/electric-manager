@@ -29,8 +29,8 @@
                     <select class="easyui-combobox" id="ipaddrQuery" style="width:100px;"></select></td>
 		            <td class="td-right">识别时间：</td>
 		            <td>
-		            <input class="easyui-datebox" type="text" id="createDateBeginQuery" style="width:100px;">~
-		            <input class="easyui-datebox" type="text" id="createDateEndQuery" style="width:100px;"></td>
+		            <input class="easyui-datebox" type="text" id="createDateBeginQuery" value="${dateBegin}" style="width:100px;">~
+		            <input class="easyui-datebox" type="text" id="createDateEndQuery" value="${dateEnd}" style="width:100px;"></td>
 		        </tr>
 		        <tr>
 		            <td></td>
@@ -57,6 +57,10 @@
 	    $(function() {
 	        $('#datagrid').datagrid({
 	            url: '${ctx}/manager/report/query',
+	            queryParams: {
+	            	createDateBegin: $('#createDateBeginQuery').datebox('getValue'),
+	                createDateEnd: $('#createDateEndQuery').datebox('getValue')
+	            },
 	            autoRowHeight: true,
 	            fixed: true,
 	            fitColumns: true,
@@ -154,7 +158,7 @@
 	    		var $ul = $('#reports ul');
 		    	$ul.children().remove();
 		    	for (var i=0; i<data.rows.length; i++) {
-	    			var $li = $('<li id="chart' + i + '" style="width: 350px;height:250px;"></li>');
+	    			var $li = $('<li id="chart' + i + '" style="width:350px;height:380px;"></li>');
 	    			$ul.append($li);
 	    		}
 	    		
@@ -165,6 +169,7 @@
 	    	        var option = {
 	    	            title: {
 	    	                text: data.rows[i].ipaddr,
+	    	                subtext: data.rows[i].location,
 	    	                x: 'center'
 	    	            },
 	    	            tooltip : {
