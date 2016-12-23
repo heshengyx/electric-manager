@@ -33,6 +33,7 @@
 		    </table>
 		    </form>
 		    <!-- search -->
+		    <img src="${ctx}/themes/extensions/bullet_tick.png" width="13">："识别成功"，<img src="${ctx}/themes/extensions/bullet_cross.png" width="13">："识别失败"
 		    <!-- datagrid -->
 		    <div id="tools">
 		        <a class="easyui-linkbutton" href="javascript:void(0);" data-options="iconCls:'icon-remove',plain:true" id="deleteBtn">删除</a>
@@ -127,13 +128,13 @@
         }
 	    function downloadFile(id) {
 	    	if (id) {
-	    		var url = "${ctx}/manager/recognitionLog/exists?random="+ Math.random();
+	    		var url = "${ctx}/manager/file/exists?random="+ Math.random();
 	            var params = {id: id};
 	            $.post(url, params, function(result) {
 	            	if (result.status) {
-	            		/* $('#win').window({});
-	            		$('#win').window('refresh', '${ctx}/download.jsp');
-	            		$('#win').window('close'); */
+	            		$('#win').window({});
+	            		$('#win').window('refresh', '${ctx}/download.jsp?id=' + id);
+	            		$('#win').window('close');
 	                } else {
 	                	$.messager.alert('消息', result.message, 'error');
 	                }

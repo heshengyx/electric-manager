@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -27,7 +26,6 @@ import com.grgbanking.electric.service.ITerminalService;
  * @author hsheng1
  *
  */
-@Component
 public class TerminalHandlerInterceptor implements HandlerInterceptor {
 
 	private final static Logger LOGGER = LoggerFactory

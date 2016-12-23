@@ -14,7 +14,6 @@ import org.springframework.util.StringUtils;
 import com.grgbanking.electric.entity.Permission;
 import com.grgbanking.electric.param.PermissionQueryParam;
 import com.grgbanking.electric.service.IPermissionService;
-import com.grgbanking.electric.tree.Tree;
 
 /**
  * 
